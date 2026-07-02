@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+html, body {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+#root {
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+/* * {
+  border: 1px solid black;
+} */
+
+/* Fade in animation for mobile menu */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Fade in from bottom animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-up-delay-1 {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.fade-in-up-delay-2 {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 0.4s forwards;
+}
+
+/* Scroll animation utility classes */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-animate.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.marquee {
+  overflow: hidden;
+  width: 100%;
+}
+/* *{
+  border: 1px solid red;
+} */
+
+.marquee-content {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: scroll 20s linear infinite;
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* GitHub Calendar Styling */
+.react-activity-calendar {
+  max-width: 100%;
+}
+
+.react-activity-calendar text {
+  fill: #B9FF66 !important;
+}
+
+.react-activity-calendar__legend-colors {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .react-activity-calendar {
+    font-size: 12px;
+  }
+}
