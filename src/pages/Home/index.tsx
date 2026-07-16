@@ -5,13 +5,14 @@ import {
   CTASection,
   CaseStudiesSection,
   WorkingProcessSection,
-  ProjectsSection,
+  EducationSection,
+  Footer,
 } from '../../components';
 
 const Home: React.FC = () => {
   return (
-    <div className="flex flex-col bg-white w-full">
-      <div className="flex flex-col w-full">
+    <div className="flex flex-col bg-white w-full min-h-screen">
+      <div className="flex flex-col w-full flex-1">
         <div className="w-full mb-[148px]">
           <section id="home">
             <HeroSection />
@@ -29,10 +30,11 @@ const Home: React.FC = () => {
         <section id="experience" className="w-full flex justify-center">
           <WorkingProcessSection />
         </section>
-        <section id="projects" className="w-full flex justify-center">
-          <ProjectsSection />
+        <section id="education" className="w-full flex justify-center">
+          <EducationSection />
         </section>
       </div>
+      <Footer />
     </div>
   );
 };

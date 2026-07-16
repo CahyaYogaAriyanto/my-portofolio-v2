@@ -107,11 +107,25 @@ const SkillsSection: React.FC = () => {
       {/* ── Header bar ── */}
       <div className="max-w-6xl mx-auto flex justify-between items-start mb-12">
         <p className="text-white/40 text-xs">© Code by Cahya</p>
+        
+        {/* Desktop: static text */}
         <p className="text-white/40 text-xs text-right max-w-[240px] leading-relaxed hidden sm:block">
           Passionate Frontend Developer dedicated to crafting innovative
           solutions and exceptional digital experiences through modern
           technologies
         </p>
+
+        {/* Mobile: infinite marquee */}
+        <div className="sm:hidden overflow-hidden max-w-[200px] relative">
+          <div className="flex animate-marquee whitespace-nowrap">
+            <span className="text-white/40 text-xs mx-4">
+              Passionate Frontend Developer dedicated to crafting innovative solutions and exceptional digital experiences through modern technologies
+            </span>
+            <span className="text-white/40 text-xs mx-4">
+              Passionate Frontend Developer dedicated to crafting innovative solutions and exceptional digital experiences through modern technologies
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* ── Giant heading ── */}

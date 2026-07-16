@@ -310,7 +310,7 @@ const ProjectsSection: React.FC = () => {
       </div>
 
       {/* ── BENTO GRID ── */}
-      <div className="px-4 lg:px-[100px] mb-10">
+      <div className="px-4 lg:px-[100px] mb-6 lg:mb-8">
         {activeFilter === 'all' ? (
           <div className="flex flex-col gap-5">
             {/* Row 1 */}

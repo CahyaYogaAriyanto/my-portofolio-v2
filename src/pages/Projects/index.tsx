@@ -1,15 +1,15 @@
 import React from 'react';
 import HeroSection from '../../components/HeroSection';
-import SkillsSection from './SkillsSection';
+import ProjectsSection from '../../components/ProjectsSection';
 import Footer from '../../components/Footer';
 
-const Skills: React.FC = () => {
+const Projects: React.FC = () => {
   return (
     <div className="flex flex-col bg-white w-full min-h-screen">
       <HeroSection />
       <div className="flex flex-col w-full flex-1">
         <div className="w-full flex justify-center pt-[80px]">
-          <SkillsSection />
+          <ProjectsSection />
         </div>
       </div>
       <Footer />
@@ -17,4 +17,4 @@ const Skills: React.FC = () => {
   );
 };
 
-export default Skills;
+export default Projects;

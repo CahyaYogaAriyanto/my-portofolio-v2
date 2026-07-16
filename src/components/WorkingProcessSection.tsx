@@ -10,6 +10,7 @@ const WorkingProcessSection: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLang();
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastScrollY = useRef<number>(0);
 
   const handleToggle = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -25,23 +26,29 @@ const WorkingProcessSection: React.FC = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // Mark as visible and auto-expand
+            const currentScrollY = window.scrollY;
+            const isScrollingDown = currentScrollY > lastScrollY.current;
+            lastScrollY.current = currentScrollY;
+
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              // Mark as visible and auto-expand only the most visible one
               setVisibleItems((prev) => new Set(prev).add(index));
               setExpandedIndex(index);
-            } else {
-              // Remove from visible set when out of view
+            } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+              // Collapse when leaving viewport or visibility drops
               setVisibleItems((prev) => {
                 const newSet = new Set(prev);
                 newSet.delete(index);
                 return newSet;
               });
+              // Collapse if this was the expanded one
+              setExpandedIndex((current) => (current === index ? null : current));
             }
           });
         },
         {
-          threshold: [0.4, 0.6, 0.8], // Multiple thresholds for smoother detection
-          rootMargin: '-15% 0px -35% 0px', // Trigger zone in middle of viewport
+          threshold: [0, 0.3, 0.5, 0.7, 1.0], // Multiple thresholds for precise detection
+          rootMargin: '-20% 0px -30% 0px', // Trigger zone in middle of viewport
         }
       );
 
@@ -60,9 +67,9 @@ const WorkingProcessSection: React.FC = () => {
         title={t.experience.sectionTitle}
         description={t.experience.sectionDesc}
       />
-      <div className="relative flex flex-col self-stretch max-w-[1234px] mb-[80px] lg:mb-[140px] mx-4 lg:mx-auto">
+      <div className="relative flex flex-col self-stretch max-w-[1234px] mb-[40px] lg:mb-[60px] mx-4 lg:mx-auto">
         {/* Spacer to allow last cards to stick properly */}
-        <div className="relative" style={{ paddingBottom: '100vh' }}>
+        <div className="relative" style={{ paddingBottom: '80vh' }}>
           {t.experience.items.map((experience, index) => (
             <div
               key={index}
