@@ -181,13 +181,13 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
                 <ExternalIcon className="w-3 h-3" /> Live
               </a>
             )}
-            {project.repoUrl && (
+            {/* {project.repoUrl && (
               <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
                 className="flex items-center gap-1.5 bg-[#191A23] text-white text-xs font-bold px-3 py-1.5 rounded-full cursor-pointer transition-colors duration-200 hover:bg-[#2d2f3a]">
                 <GithubIcon className="w-3 h-3" /> Repo
               </a>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -210,18 +210,10 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
 
       {/* browser chrome + screenshot */}
       <div className="relative" style={{ aspectRatio }}>
-        {/* browser bar — fixed height, sits on top */}
-        <div className="absolute top-0 left-0 right-0 z-10 bg-[#F3F3F3]/95 backdrop-blur-sm border-b border-[#E0E0E0] px-3 py-2 flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57] shrink-0" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E] shrink-0" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#28C840] shrink-0" />
-          <div className="ml-2 flex-1 bg-white rounded-md h-5 flex items-center px-2 overflow-hidden">
-            <span className="text-[9px] text-[#9CA3AF] truncate">{project.liveUrl ?? 'project.demo'}</span>
-          </div>
-        </div>
+       
 
         {/* screenshot — fills the aspect-ratio box, nudged down by browser bar height */}
-        <div className="absolute inset-0 pt-[30px] overflow-hidden bg-[#F9F9F9]">
+        <div className="absolute inset-0 overflow-hidden bg-[#F9F9F9]">
           <img
             src={project.imageSrc}
             alt={project.title}
@@ -238,13 +230,13 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
               <ExternalIcon className="w-3.5 h-3.5" /> Live
             </a>
           )}
-          {project.repoUrl && (
+          {/* {project.repoUrl && (
             <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
               className="flex items-center gap-1.5 bg-white text-black text-xs font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-200">
               <GithubIcon className="w-3.5 h-3.5" /> Repo
             </a>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -272,7 +264,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
   );
 };
 
-// ── ProjectsSection ───────────────────────────────────────────────────────────
+
 type FilterType = 'all' | 'website' | 'mobile';
 
 const ProjectsSection: React.FC = () => {
@@ -320,27 +312,20 @@ const ProjectsSection: React.FC = () => {
       {/* ── BENTO GRID ── */}
       <div className="px-4 lg:px-[100px] mb-10">
         {activeFilter === 'all' ? (
-          /**
-           * Bento layout (6 projects):
-           *
-           * Row 1: [Pig Friends 2/3] [Plagbleg 1/3]
-           * Row 2: [Trilokas mobile full-width horizontal]
-           * Row 3: [Picture 1/3] [Sayur Mart 1/3] [PMB SMA mobile 1/3]
-           */
           <div className="flex flex-col gap-5">
             {/* Row 1 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               <div className="md:col-span-2">
-                <BentoCard project={PROJECTS[0]} variant="featured" />
+                <BentoCard project={PROJECTS[1]} variant="featured" />
               </div>
               <div className="md:col-span-1">
-                <BentoCard project={PROJECTS[1]} variant="tall" />
+                <BentoCard project={PROJECTS[2]} variant="tall" />
               </div>
             </div>
 
             {/* Row 2 — mobile card spans full width */}
             <div className="grid grid-cols-1 gap-5">
-              <BentoCard project={PROJECTS[2]} variant="normal" />
+              <BentoCard project={PROJECTS[0]} variant="normal" />
             </div>
 
             {/* Row 3 — three equal cards */}

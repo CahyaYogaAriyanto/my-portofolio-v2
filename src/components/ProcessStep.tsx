@@ -22,7 +22,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
   
   return (
     <div
-      className={`flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-300 overflow-hidden`}
+      className={`flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-500 ease-out overflow-hidden`}
       style={{ boxShadow: '0px 5px 0px #191A23' }}
     >
       {/* Header - Always Visible */}
@@ -33,7 +33,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
         </div>
         <button
           onClick={onToggle}
-          className="w-[48px] lg:w-[58px] h-[48px] lg:h-[58px] flex items-center justify-center bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0"
+          className="w-[48px] lg:w-[58px] h-[48px] lg:h-[58px] flex items-center justify-center bg-transparent border-0 cursor-pointer transition-all duration-300 hover:scale-110 flex-shrink-0"
           aria-label={isExpanded ? "Collapse" : "Expand"}
         >
           {isExpanded ? (
@@ -43,6 +43,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
               viewBox="0 0 58 58"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="transition-transform duration-300"
             >
               <circle cx="29" cy="29" r="29" fill="#F3F3F3" />
               <path
@@ -59,6 +60,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
               viewBox="0 0 58 58"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="transition-transform duration-300"
             >
               <circle cx="29" cy="29" r="29" fill="#F3F3F3" />
               <path
@@ -74,7 +76,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
 
       {/* Dropdown Content - Shows when expanded */}
       <div
-        className={`transition-all duration-300 ease-in-out ${
+        className={`transition-all duration-500 ease-in-out ${
           isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
