@@ -1,9 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
+  const location = useLocation();
 
+  // Auto scroll to top on route change
+  useEffect(() => {
+    const root = document.getElementById('root');
+    if (root) {
+      root.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    // Also scroll window (fallback)
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
+  // Show/hide scroll button based on scroll position
   useEffect(() => {
     const root = document.getElementById('root');
     if (!root) return;
@@ -35,6 +48,7 @@ const ScrollToTop = () => {
         shadow-[0px_4px_0px_#191A23]
         hover:translate-y-[-2px]
         transition-transform duration-200
+        cursor-pointer
       "
     >
       <ArrowUp size={18} />

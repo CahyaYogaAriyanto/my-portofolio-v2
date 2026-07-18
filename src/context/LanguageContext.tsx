@@ -172,9 +172,9 @@ export const translations = {
       education: [
         {
           degree: 'Bachelor of Informatics Engineering',
-          institution: 'Universitas XYZ',
-          period: '2019 – 2023',
-          gpa: 'GPA: 3.82 / 4.00',
+          institution: 'Universitas Teknologi Yogyakarta',
+          period: '2022 – 2026',
+          gpa: 'GPA: 3.78 / 4.00',
         },
       ],
 

@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
                   href="mailto:cahyayogaariyanto@gmail.com"
                   className="text-white/60 hover:text-white transition-colors duration-200 text-sm"
                 >
-                  cahyayogaariyanto@gmail.com
+                  cahyayoga10@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-2">
@@ -130,7 +130,7 @@ const Footer: React.FC = () => {
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span className="text-white/60 text-sm">
-                  Semarang, Indonesia
+                  Sleman, Indonesia
                 </span>
               </li>
             </ul>

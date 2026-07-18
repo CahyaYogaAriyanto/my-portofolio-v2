@@ -1,0 +1,16 @@
+{
+  "name": "Cahya Yoga Ariyanto - Frontend Developer",
+  "short_name": "Cahya Portfolio",
+  "description": "Portfolio website of Cahya Yoga Ariyanto showcasing frontend development projects and skills",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#B9FF66",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
