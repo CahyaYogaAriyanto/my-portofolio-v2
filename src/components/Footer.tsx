@@ -6,17 +6,15 @@ import { useLang } from '../context/LanguageContext';
 const Footer: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useLang();
-
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
     <footer className="w-full bg-[#191A23] text-white mt-auto">
       <div className="max-w-[1440px] mx-auto px-4 lg:px-[100px] py-16 lg:py-20">
         
-        {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           
-          {/* Brand & Description */}
+          {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img 
@@ -30,7 +28,7 @@ const Footer: React.FC = () => {
               {t.hero.bio}
             </p>
             
-            {/* Social Links */}
+            {/* socials */}
             <div className="flex gap-4">
               <a
                 href="https://github.com/CahyaYogaAriyanto"
@@ -69,7 +67,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* links */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-[#B9FF66]">Quick Links</h3>
             <ul className="space-y-2">
@@ -108,7 +106,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* contact info */}
           <div>
             <h3 className="text-lg font-semibold mb-4 text-[#B9FF66]">Contact</h3>
             <ul className="space-y-3">
@@ -137,13 +135,11 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-white/10 mb-8"></div>
 
-        {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-white/40 text-sm">
-            © {currentYear} {t.cv.name}. All rights reserved.
+            © {year} {t.cv.name}. All rights reserved.
           </p>
           <p className="text-white/40 text-sm">
             Built with React, TypeScript & Tailwind CSS

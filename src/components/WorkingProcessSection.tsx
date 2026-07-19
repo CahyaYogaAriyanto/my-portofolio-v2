@@ -16,7 +16,7 @@ const WorkingProcessSection: React.FC = () => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  // Auto-expand when item becomes visible (works for both scroll directions)
+  // auto expand on scroll
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -27,28 +27,24 @@ const WorkingProcessSection: React.FC = () => {
         (entries) => {
           entries.forEach((entry) => {
             const currentScrollY = window.scrollY;
-            const isScrollingDown = currentScrollY > lastScrollY.current;
             lastScrollY.current = currentScrollY;
 
             if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-              // Mark as visible and auto-expand only the most visible one
               setVisibleItems((prev) => new Set(prev).add(index));
               setExpandedIndex(index);
             } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
-              // Collapse when leaving viewport or visibility drops
               setVisibleItems((prev) => {
                 const newSet = new Set(prev);
                 newSet.delete(index);
                 return newSet;
               });
-              // Collapse if this was the expanded one
               setExpandedIndex((current) => (current === index ? null : current));
             }
           });
         },
         {
-          threshold: [0, 0.3, 0.5, 0.7, 1.0], // Multiple thresholds for precise detection
-          rootMargin: '-20% 0px -30% 0px', // Trigger zone in middle of viewport
+          threshold: [0, 0.3, 0.5, 0.7, 1.0],
+          rootMargin: '-20% 0px -30% 0px',
         }
       );
 
@@ -68,16 +64,16 @@ const WorkingProcessSection: React.FC = () => {
         description={t.experience.sectionDesc}
       />
       <div className="relative flex flex-col self-stretch max-w-[1234px] mb-[40px] lg:mb-[60px] mx-4 lg:mx-auto">
-        {/* Spacer to allow last cards to stick properly */}
+        {/* spacer for scroll */}
         <div className="relative" style={{ paddingBottom: '80vh' }}>
           {t.experience.items.map((experience, index) => (
             <div
               key={index}
-              ref={(el) => (itemRefs.current[index] = el)}
+              ref={(el) => {itemRefs.current[index] = el}}
               className="sticky mb-[20px] lg:mb-[30px] transition-all duration-500 ease-out"
               style={{
-                top: `${80 + index * 30}px`, // Staggered sticky position
-                zIndex: index + 1, // Higher cards stack on top
+                top: `${80 + index * 30}px`,
+                zIndex: index + 1,
                 transform: visibleItems.has(index) ? 'translateY(0)' : 'translateY(10px)',
                 opacity: visibleItems.has(index) ? 1 : 0.95,
               }}

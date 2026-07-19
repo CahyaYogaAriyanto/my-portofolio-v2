@@ -2,7 +2,46 @@ import React from 'react';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { useLang } from '../../context/LanguageContext';
 
-/* ── SectionTitle ─────────────────────────────────────────────────────────── */
+import htmlIcon from '../../assets/icon/html5.svg';
+import cssIcon from '../../assets/icon/css-3-seeklogo.svg';
+import tailwindIcon from '../../assets/icon/tailwind.svg';
+import reactIcon from '../../assets/icon/react-seeklogo.svg';
+import nextIcon from '../../assets/icon/next-js-seeklogo.svg';
+import nodeIcon from '../../assets/icon/node-js-seeklogo.svg';
+import pythonIcon from '../../assets/icon/python-seeklogo.svg';
+import phpIcon from '../../assets/icon/php-seeklogo.svg';
+import laravelIcon from '../../assets/icon/laravel-seeklogo.svg';
+import flutterIcon from '../../assets/icon/flutter-seeklogo.svg';
+import mysqlIcon from '../../assets/icon/mysql-seeklogo.svg';
+import postgresqlIcon from '../../assets/icon/postqresql-seeklogo.svg';
+import firebaseIcon from '../../assets/icon/firebase-icon-seeklogo.svg';
+import figmaIcon from '../../assets/icon/figma-seeklogo.svg';
+import githubIcon from '../../assets/icon/github-seeklogo.svg';
+import gitlabIcon from '../../assets/icon/gitlab-seeklogo.svg';
+import angularIcon from '../../assets/icon/angular-seeklogo.svg';
+
+const iconMap: Record<string, string> = {
+  'HTML5': htmlIcon,
+  'CSS3': cssIcon,
+  'Tailwind': tailwindIcon,
+  'React': reactIcon,
+  'React Native': reactIcon,
+  'Next.js': nextIcon,
+  'Node.js': nodeIcon,
+  'Python': pythonIcon,
+  'PHP': phpIcon,
+  'Laravel': laravelIcon,
+  'Flutter': flutterIcon,
+  'MySQL': mysqlIcon,
+  'PostgreSQL': postgresqlIcon,
+  'MongoDB': firebaseIcon,
+  'Firebase': firebaseIcon,
+  'Figma': figmaIcon,
+  'GitHub': githubIcon,
+  'GitLab': gitlabIcon,
+  'Angular': angularIcon,
+};
+
 const SectionTitle: React.FC<{ title: string; description?: string }> = ({ title, description }) => (
   <div className="flex flex-col lg:flex-row items-start lg:items-center mb-12 lg:mb-20 ml-4 lg:ml-[100px] gap-4 lg:gap-10 pr-4 lg:pr-0">
     <div className="flex flex-col shrink-0 items-start bg-[#B9FF66] px-[7px] rounded-[7px]">
@@ -14,26 +53,37 @@ const SectionTitle: React.FC<{ title: string; description?: string }> = ({ title
   </div>
 );
 
-/* ── Tag badge ────────────────────────────────────────────────────────────── */
 const Tag: React.FC<{ label: string }> = ({ label }) => (
   <span className="text-sm text-black border border-[#191A23] rounded-full px-3 py-1 bg-white">
     {label}
   </span>
 );
 
-/* ── Skill Icon pill ──────────────────────────────────────────────────────── */
-interface SkillIconProps { label: string; icon: string; }
-const SkillIcon: React.FC<SkillIconProps> = ({ label, icon }) => (
-  <div
-    title={label}
-    className="flex items-center gap-2 bg-[#F3F3F3] border border-[#191A23] rounded-full px-3 py-1.5 text-sm font-medium text-black select-none"
-  >
-    <span role="img" aria-label={label} className="text-base">{icon}</span>
-    <span>{label}</span>
-  </div>
-);
+interface SkillIconProps { 
+  label: string;
+}
+const SkillIcon: React.FC<SkillIconProps> = ({ label }) => {
+  const iconSrc = iconMap[label];
+  
+  return (
+    <div
+      title={label}
+      className="flex items-center gap-2 bg-[#F3F3F3] border border-[#191A23] rounded-full px-3 py-1.5 text-sm font-medium text-black select-none"
+    >
+      {iconSrc ? (
+        <img 
+          src={iconSrc} 
+          alt={label} 
+          className="w-5 h-5 object-contain"
+        />
+      ) : (
+        <span className="text-xs">📦</span>
+      )}
+      <span>{label}</span>
+    </div>
+  );
+};
 
-/* ── Skill Card ───────────────────────────────────────────────────────────── */
 interface SkillCardProps {
   title: string;
   description: string;
@@ -88,12 +138,12 @@ const SkillsSection: React.FC = () => {
                 description="Building engaging and user-friendly web interfaces using modern frameworks and cutting-edge technologies." 
                 accent="lime"
               >
-                <SkillIcon label="HTML5" icon="🔶" />
-                <SkillIcon label="JavaScript" icon="🟨" />
-                <SkillIcon label="TypeScript" icon="🔷" />
-                <SkillIcon label="React" icon="⚛️" />
-                <SkillIcon label="Next.js" icon="⬛" />
-                <SkillIcon label="Redux" icon="🟣" />
+                <SkillIcon label="HTML5" />
+                <SkillIcon label="CSS3" />
+                <SkillIcon label="Tailwind" />
+                <SkillIcon label="React" />
+                <SkillIcon label="Next.js" />
+                <SkillIcon label="Angular" />
               </SkillCard>
             </div>
             
@@ -103,10 +153,8 @@ const SkillsSection: React.FC = () => {
               description="Proficient in multiple languages for problem-solving, algorithms, and building efficient solutions." 
               accent="dark"
             >
-              <SkillIcon label="Python" icon="🐍" />
-              <SkillIcon label="C" icon="🔵" />
-              <SkillIcon label="C++" icon="⚙️" />
-              <SkillIcon label="Java" icon="☕" />
+              <SkillIcon label="Python" />
+              <SkillIcon label="PHP" />
             </SkillCard>
           </div>
 
@@ -118,11 +166,9 @@ const SkillsSection: React.FC = () => {
               description="Crafting visually appealing and responsive designs with advanced styling tools and frameworks." 
               accent="light"
             >
-              <SkillIcon label="CSS3" icon="🎨" />
-              <SkillIcon label="Tailwind" icon="💨" />
-              <SkillIcon label="Bootstrap" icon="🅱️" />
-              <SkillIcon label="Sass" icon="💅" />
-              <SkillIcon label="MUI" icon="🅼" />
+              <SkillIcon label="CSS3" />
+              <SkillIcon label="Tailwind" />
+              <SkillIcon label="Figma" />
             </SkillCard>
 
             {/* Database Management (4 items) */}
@@ -131,10 +177,9 @@ const SkillsSection: React.FC = () => {
               description="Designing and managing databases to ensure secure and efficient data storage and retrieval." 
               accent="lime"
             >
-              <SkillIcon label="MySQL" icon="🐬" />
-              <SkillIcon label="PostgreSQL" icon="🐘" />
-              <SkillIcon label="MongoDB" icon="🍃" />
-              <SkillIcon label="Firebase" icon="🔥" />
+              <SkillIcon label="MySQL" />
+              <SkillIcon label="PostgreSQL" />
+              <SkillIcon label="Firebase" />
             </SkillCard>
 
             {/* Back-End Development (4 items) */}
@@ -143,38 +188,24 @@ const SkillsSection: React.FC = () => {
               description="Developing robust server-side logic and APIs to power dynamic and scalable web applications." 
               accent="dark"
             >
-              <SkillIcon label="Node.js" icon="🟢" />
-              <SkillIcon label="Express" icon="🚂" />
-              <SkillIcon label="Django" icon="🐉" />
-              <SkillIcon label="Laravel" icon="🔺" />
+              <SkillIcon label="Node.js" />
+              <SkillIcon label="Laravel" />
             </SkillCard>
           </div>
 
           {/* Row 3: 1 normal + 1 wide */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Web Animations (3 items) */}
-            <SkillCard 
-              title="Web Animations" 
-              description="Creating seamless animations and transitions to enhance user engagement and interactivity." 
-              accent="lime"
-            >
-              <SkillIcon label="Framer Motion" icon="🎞️" />
-              <SkillIcon label="GSAP" icon="🦎" />
-              <SkillIcon label="Lottie" icon="✨" />
-            </SkillCard>
+            {/* Web Animations removed - no matching icons available */}
 
-            {/* Cloud & Deployment - Wide (5 items) */}
-            <div className="md:col-span-2">
+            {/* Version Control - Wide */}
+            <div className="md:col-span-3">
               <SkillCard 
-                title="Cloud & Deployment" 
-                description="Experienced in deploying and managing applications using modern cloud platforms and DevOps tools." 
+                title="Version Control & Collaboration" 
+                description="Effectively managing code and collaborating on projects using Git platforms." 
                 accent="dark"
               >
-                <SkillIcon label="Docker" icon="🐳" />
-                <SkillIcon label="AWS" icon="🟠" />
-                <SkillIcon label="Azure" icon="☁️" />
-                <SkillIcon label="GCP" icon="🌐" />
-                <SkillIcon label="Vercel" icon="▲" />
+                <SkillIcon label="GitHub" />
+                <SkillIcon label="GitLab" />
               </SkillCard>
             </div>
           </div>
@@ -196,40 +227,29 @@ const SkillsSection: React.FC = () => {
               </SkillCard>
             </div>
 
-            {/* UI/UX & Testing (4 items) */}
+            {/* UI/UX Design */}
             <SkillCard 
-              title="UI/UX & Testing" 
-              description="Designing user-centric interfaces and ensuring code quality through rigorous testing and debugging." 
+              title="UI/UX Design" 
+              description="Designing user-centric interfaces that are intuitive, visually appealing, and easy to navigate." 
               accent="lime"
             >
-              <SkillIcon label="Figma" icon="🎭" />
-              <SkillIcon label="Jest" icon="🃏" />
-              <SkillIcon label="Cypress" icon="🌲" />
-              <SkillIcon label="Vitest" icon="⚡" />
+              <SkillIcon label="Figma" />
             </SkillCard>
           </div>
 
           {/* Row 5: 3 cards - mixed sizes */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {/* Mobile App Development (2 items) */}
+            {/* Mobile App Development */}
             <SkillCard 
               title="Mobile App Development" 
               description="Creating cross-platform mobile apps with sleek designs and robust functionality." 
               accent="dark"
             >
-              <SkillIcon label="React Native" icon="⚛️" />
-              <SkillIcon label="Expo" icon="📱" />
+              <SkillIcon label="React Native" />
+              <SkillIcon label="Flutter" />
             </SkillCard>
 
-            {/* Version Control (2 items) */}
-            <SkillCard 
-              title="Version Control" 
-              description="Effectively managing code and collaborating on projects for seamless teamwork." 
-              accent="lime"
-            >
-              <SkillIcon label="GitHub" icon="🐙" />
-              <SkillIcon label="GitLab" icon="🦊" />
-            </SkillCard>
+            {/* Version Control moved up */}
 
             {/* Personal Development (4 tags) */}
             <SkillCard 

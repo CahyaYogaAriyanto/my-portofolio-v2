@@ -20,12 +20,11 @@ const HeroSection = () => {
   const [isShaking, setIsShaking] = useState(false);
 
   const handleExplosion = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // Get button position
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    // Create 30 particles
+    // spawn particles
     const newParticles: Particle[] = Array.from({ length: 30 }, (_, i) => {
       const angle = (Math.PI * 2 * i) / 30;
       const velocity = 3 + Math.random() * 4;
@@ -45,15 +44,8 @@ const HeroSection = () => {
     setParticles(newParticles);
     setIsShaking(true);
 
-    // Remove particles after animation
-    setTimeout(() => {
-      setParticles([]);
-    }, 2000);
-
-    // Stop shaking
-    setTimeout(() => {
-      setIsShaking(false);
-    }, 500);
+    setTimeout(() => setParticles([]), 2000);
+    setTimeout(() => setIsShaking(false), 500);
   };
 
   return (
@@ -62,7 +54,7 @@ const HeroSection = () => {
       className={`relative w-full overflow-hidden bg-[#b0b0b0] ${isShaking ? 'animate-shake' : ''}`}
       style={{ height: '100svh', minHeight: '600px', marginLeft: 0, marginRight: 0 }}
     >
-      {/* Photo — grayscale, covers full height */}
+      {/* photo bg */}
       <div className="absolute inset-0 flex justify-center">
         <img
           src={myPhoto}
@@ -72,7 +64,7 @@ const HeroSection = () => {
         />
       </div>
 
-      {/* Vignette */}
+      {/* vignette overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -81,31 +73,26 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Top bar: name + bio */}
+      {/* top section */}
       <div className="absolute top-10 left-14 right-14 z-20 flex justify-between items-start">
         <h2 className="text-white text-xl font-semibold font-light tracking-wide">
           {t.hero.name}
         </h2>
         
-        {/* Desktop: static bio text (kanan atas) */}
         <p className="hidden md:block text-white/80 text-right max-w-md leading-relaxed">
           {t.hero.bio}
         </p>
       </div>
 
-      {/* Mobile & Tablet: infinite marquee bio (di atas title) */}
+      {/* mobile marquee */}
       <div className="md:hidden absolute bottom-32 left-0 right-0 z-20 overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap">
-          <span className="text-white/80 text-sm mx-4">
-            {t.hero.bio}
-          </span>
-          <span className="text-white/80 text-sm mx-4">
-            {t.hero.bio}
-          </span>
+          <span className="text-white/80 text-sm mx-4">{t.hero.bio}</span>
+          <span className="text-white/80 text-sm mx-4">{t.hero.bio}</span>
         </div>
       </div>
 
-      {/* Arrow button with explosion effect */}
+      {/* arrow btn */}
       <div className="absolute left-[68%] top-1/2 -translate-y-1/2 z-20">
         <button
           onClick={handleExplosion}
@@ -125,7 +112,7 @@ const HeroSection = () => {
         </button>
       </div>
 
-      {/* Explosion Particles */}
+      {/* particles */}
       {particles.map((particle) => (
         <div
           key={particle.id}
@@ -143,7 +130,7 @@ const HeroSection = () => {
         />
       ))}
 
-      {/* Giant title */}
+      {/* title */}
       <div
         className="absolute bottom-20 left-0 right-0 z-20 overflow-hidden"
         style={{ lineHeight: 1 }}
