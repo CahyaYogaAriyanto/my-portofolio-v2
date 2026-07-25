@@ -13,8 +13,6 @@ const Footer: React.FC = () => {
       <div className="max-w-[1440px] mx-auto px-4 lg:px-[100px] py-16 lg:py-20">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          
-          {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img 
