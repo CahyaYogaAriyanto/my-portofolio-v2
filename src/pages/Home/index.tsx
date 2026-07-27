@@ -18,20 +18,17 @@ const Home: React.FC = () => {
             <HeroSection />
           </section>
         </div>
-        <section id="services" className="w-full flex justify-center">
-          <ServicesSection />
-        </section>
-        <div className="w-full flex justify-center">
-          <CTASection />
-        </div>
-        <section id="github-contributions" className="w-full flex justify-center">
-          <CaseStudiesSection />
-        </section>
         <section id="experience" className="w-full flex justify-center">
           <WorkingProcessSection />
         </section>
         <section id="education" className="w-full flex justify-center">
           <EducationSection />
+        </section>
+        <section id="services" className="w-full flex justify-center">
+          <ServicesSection />
+        </section>
+        <section id="github-contributions" className="w-full flex justify-center">
+          <CaseStudiesSection />
         </section>
       </div>
       <Footer />

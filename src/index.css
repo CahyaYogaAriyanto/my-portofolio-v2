@@ -43,6 +43,22 @@ html, body {
   animation: fadeIn 0.3s ease-in-out;
 }
 
+/* Scale in animation for modal */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 /* Fade in from bottom animation */
 @keyframes fadeInUp {
   from {

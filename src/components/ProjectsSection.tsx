@@ -7,8 +7,12 @@ import picture1 from '../assets/image_project/website/picture-1.png';
 import pigFriends from '../assets/image_project/website/pig-friends.png';
 import plagbleg from '../assets/image_project/website/plagbleg.png';
 import sayurMart from '../assets/image_project/website/sayur-mart.png';
+import klinikHewan from '../assets/image_project/website/KlinikHewan.png';
+import klinikKecantikan from '../assets/image_project/website/KlinikKecantikan.png';
 import trilokasMobile from '../assets/image_project/mobile/Trilokas-mobile.png';
 import pmbsma from '../assets/image_project/mobile/pmbsma.png';
+import kenzyToys from '../assets/image_project/mobile/KenzyToys.jpg';
+import klinikGigi from '../assets/image_project/mobile/KlinikGigi.jpg';
 
 // ── types ─────────────────────────────────────────────────────────────────────
 type ProjectType = 'website' | 'mobile';
@@ -50,6 +54,28 @@ const PROJECTS: Project[] = [
     repoUrl: 'https://github.com',
   },
   {
+    title: 'Klinik Hewan Dashboard',
+    description:
+      'Sistem manajemen pelayanan klinik hewan berbasis web dengan fitur administrasi lengkap, rekam medis, dan jadwal appointment.',
+    tech: ['React', 'Node.js', 'MySQL'],
+    imageSrc: klinikHewan,
+    type: 'website',
+    accent: '#60A5FA',
+    aspectRatio: '16 / 9',
+    repoUrl: 'https://github.com',
+  },
+  {
+    title: 'Klinik Kecantikan Dashboard',
+    description:
+      'Platform manajemen pelayanan klinik kecantikan dengan sistem booking, manajemen pelanggan, dan laporan treatment.',
+    tech: ['React', 'Tailwind CSS', 'PostgreSQL'],
+    imageSrc: klinikKecantikan,
+    type: 'website',
+    accent: '#F472B6',
+    aspectRatio: '16 / 9',
+    repoUrl: 'https://github.com',
+  },
+  {
     title: 'Trilokas',
     description:
       'Aplikasi mobile eksplorasi budaya & destinasi wisata berbasis lokasi dengan pengalaman visual imersif.',
@@ -58,6 +84,28 @@ const PROJECTS: Project[] = [
     type: 'mobile',
     accent: '#FFD166',
     aspectRatio: '244 / 522',
+    repoUrl: 'https://github.com',
+  },
+  {
+    title: 'Kenzy Toys',
+    description:
+      'Aplikasi mobile manajemen toko mainan dengan fitur inventori, penjualan, dan laporan stok real-time.',
+    tech: ['Flutter', 'Dart', 'Firebase'],
+    imageSrc: kenzyToys,
+    type: 'mobile',
+    accent: '#FCD34D',
+    aspectRatio: '9 / 16',
+    repoUrl: 'https://github.com',
+  },
+  {
+    title: 'Klinik Gigi',
+    description:
+      'Aplikasi mobile manajemen pelayanan klinik gigi dengan sistem reservasi pasien, rekam medis, dan reminder appointment.',
+    tech: ['Flutter', 'Dart', 'Firebase'],
+    imageSrc: klinikGigi,
+    type: 'mobile',
+    accent: '#34D399',
+    aspectRatio: '9 / 16',
     repoUrl: 'https://github.com',
   },
   {
@@ -110,13 +158,57 @@ const ExternalIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   </svg>
 );
 
+// ── ImageModal ────────────────────────────────────────────────────────────────
+interface ImageModalProps {
+  isOpen: boolean;
+  imageSrc: string;
+  title: string;
+  onClose: () => void;
+}
+
+const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fadeIn"
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 group"
+        aria-label="Close modal"
+      >
+        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Modal content */}
+      <div
+        className="relative max-w-[95vw] max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl animate-scaleIn"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={imageSrc}
+          alt={title}
+          className="w-full h-full object-contain"
+          style={{ maxHeight: '90vh' }}
+        />
+      </div>
+    </div>
+  );
+};
+
 // ── BentoCard ─────────────────────────────────────────────────────────────────
 interface BentoCardProps {
   project: Project;
   variant: 'featured' | 'tall' | 'normal';
+  onImageClick: () => void;
 }
 
-const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
+const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick }) => {
   const [hovered, setHovered] = useState(false);
   const isMobile = project.type === 'mobile';
 
@@ -124,7 +216,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
   if (isMobile) {
     return (
       <div
-        className={`group relative flex flex-col sm:flex-row overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white ${hovered ? '-translate-y-1' : ''}`}
+        className={`group relative flex flex-col sm:flex-row overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white h-[550px] ${hovered ? '-translate-y-1' : ''}`}
         style={{ boxShadow: hovered ? '0px 8px 0px #191A23' : '0px 5px 0px #191A23' }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -135,7 +227,11 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
         {/* phone mockup panel — sized to fit the portrait image */}
         <div className="flex items-center justify-center bg-[#F0F2F5] px-8 py-8 sm:w-[220px] shrink-0">
           {/* phone shell — aspect ratio matches actual screenshot */}
-          <div className="relative w-[108px]" style={{ aspectRatio: project.aspectRatio ?? '244 / 522' }}>
+          <div 
+            className="relative w-[108px] cursor-pointer" 
+            style={{ aspectRatio: project.aspectRatio ?? '244 / 522' }}
+            onClick={onImageClick}
+          >
             {/* shell */}
             <div className="absolute inset-0 rounded-[22px] bg-[#191A23] shadow-xl" />
             {/* screen inset */}
@@ -194,13 +290,12 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
     );
   }
 
-  // Website card: browser mockup on top, info below
-  // pig-friends ≈ 2:1, plagbleg ≈ 1.85:1 — use each project's real aspect ratio
+
   const aspectRatio = project.aspectRatio ?? '16 / 9';
 
   return (
     <div
-      className={`group relative flex flex-col overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white ${hovered ? '-translate-y-1' : ''}`}
+      className={`group relative flex flex-col overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white h-[550px] ${hovered ? '-translate-y-1' : ''}`}
       style={{ boxShadow: hovered ? '0px 8px 0px #191A23' : '0px 5px 0px #191A23' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -209,9 +304,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
       <div className="absolute top-0 left-0 right-0 h-1.5 z-10" style={{ background: project.accent }} />
 
       {/* browser chrome + screenshot */}
-      <div className="relative" style={{ aspectRatio }}>
-       
-
+      <div className="relative cursor-pointer" style={{ aspectRatio }} onClick={onImageClick}>
         {/* screenshot — fills the aspect-ratio box, nudged down by browser bar height */}
         <div className="absolute inset-0 overflow-hidden bg-[#F9F9F9]">
           <img
@@ -241,7 +334,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant }) => {
       </div>
 
       {/* info */}
-      <div className="p-5 flex flex-col gap-2.5">
+      <div className="p-5 flex flex-col gap-2.5 flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-[#09090B] text-base font-bold leading-snug">{project.title}</h3>
           <span
@@ -270,6 +363,7 @@ type FilterType = 'all' | 'website' | 'mobile';
 const ProjectsSection: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [modalImage, setModalImage] = useState<{ src: string; title: string } | null>(null);
 
   const filtered =
     activeFilter === 'all'
@@ -282,16 +376,31 @@ const ProjectsSection: React.FC = () => {
     { label: 'Mobile', value: 'mobile' },
   ];
 
+  const handleImageClick = (imageSrc: string, title: string) => {
+    setModalImage({ src: imageSrc, title });
+  };
+
+  const handleCloseModal = () => {
+    setModalImage(null);
+  };
+
   return (
     <div
       ref={ref}
-      className={`w-full max-w-[1440px] scroll-animate ${isVisible ? 'visible' : ''}`}
+      className={`w-full max-w-[1440px]  scroll-animate ${isVisible ? 'visible' : ''}`}
     >
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={modalImage !== null}
+        imageSrc={modalImage?.src ?? ''}
+        title={modalImage?.title ?? ''}
+        onClose={handleCloseModal}
+      />
+
       <SectionTitle
         title="Projects"
         description="Kumpulan proyek yang saya kerjakan — dari web hingga mobile"
       />
-
       {/* filter tabs */}
       <div className="flex items-center gap-2 px-4 lg:px-[100px] mb-8">
         {filters.map((f) => (
@@ -312,34 +421,97 @@ const ProjectsSection: React.FC = () => {
       {/* ── BENTO GRID ── */}
       <div className="px-4 lg:px-[100px] mb-6 lg:mb-8">
         {activeFilter === 'all' ? (
-          <div className="flex flex-col gap-5">
-            {/* Row 1 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="md:col-span-2">
-                <BentoCard project={PROJECTS[1]} variant="featured" />
-              </div>
-              <div className="md:col-span-1">
-                <BentoCard project={PROJECTS[2]} variant="tall" />
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
+            {/* Row 1: Large (2 cols) + Small (1 col) */}
+            <div className="md:col-span-2 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[1]} 
+                variant="featured" 
+                onImageClick={() => handleImageClick(PROJECTS[1].imageSrc, PROJECTS[1].title)}
+              />
+            </div>
+            <div className="md:col-span-1 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[4]} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(PROJECTS[4].imageSrc, PROJECTS[4].title)}
+              />
             </div>
 
-            {/* Row 2 — mobile card spans full width */}
-            <div className="grid grid-cols-1 gap-5">
-              <BentoCard project={PROJECTS[0]} variant="normal" />
+            {/* Row 2: Small (1 col) + Large (2 cols) */}
+            <div className="md:col-span-1 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[0]} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(PROJECTS[0].imageSrc, PROJECTS[0].title)}
+              />
+            </div>
+            <div className="md:col-span-2 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[2]} 
+                variant="featured" 
+                onImageClick={() => handleImageClick(PROJECTS[2].imageSrc, PROJECTS[2].title)}
+              />
             </div>
 
-            {/* Row 3 — three equal cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-              <BentoCard project={PROJECTS[3]} variant="normal" />
-              <BentoCard project={PROJECTS[4]} variant="normal" />
-              <BentoCard project={PROJECTS[5]} variant="normal" />
+            {/* Row 3: Large (2 cols) + Small (1 col) */}
+            <div className="md:col-span-2 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[3]} 
+                variant="featured" 
+                onImageClick={() => handleImageClick(PROJECTS[3].imageSrc, PROJECTS[3].title)}
+              />
+            </div>
+            <div className="md:col-span-1 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[5]} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(PROJECTS[5].imageSrc, PROJECTS[5].title)}
+              />
+            </div>
+
+            {/* Row 4: Small (1 col) + Large (2 cols) */}
+            <div className="md:col-span-1 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[6]} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(PROJECTS[6].imageSrc, PROJECTS[6].title)}
+              />
+            </div>
+            <div className="md:col-span-2 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[7]} 
+                variant="featured" 
+                onImageClick={() => handleImageClick(PROJECTS[7].imageSrc, PROJECTS[7].title)}
+              />
+            </div>
+
+            {/* Row 5: Two cards */}
+            <div className="md:col-span-2 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[8]} 
+                variant="featured" 
+                onImageClick={() => handleImageClick(PROJECTS[8].imageSrc, PROJECTS[8].title)}
+              />
+            </div>
+            <div className="md:col-span-1 md:row-span-1">
+              <BentoCard 
+                project={PROJECTS[9]} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(PROJECTS[9].imageSrc, PROJECTS[9].title)}
+              />
             </div>
           </div>
         ) : (
           /* filtered view */
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((p) => (
-              <BentoCard key={p.title} project={p} variant="normal" />
+              <BentoCard 
+                key={p.title} 
+                project={p} 
+                variant="normal" 
+                onImageClick={() => handleImageClick(p.imageSrc, p.title)}
+              />
             ))}
           </div>
         )}
