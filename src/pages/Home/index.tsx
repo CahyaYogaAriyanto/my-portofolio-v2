@@ -4,7 +4,7 @@ import {
   ServicesSection,
   CTASection,
   CaseStudiesSection,
-  WorkingProcessSection,
+  ExperienceSection,
   EducationSection,
   Footer,
 } from '../../components';
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
           </section>
         </div>
         <section id="experience" className="w-full flex justify-center">
-          <WorkingProcessSection />
+          <ExperienceSection />
         </section>
         <section id="education" className="w-full flex justify-center">
           <EducationSection />

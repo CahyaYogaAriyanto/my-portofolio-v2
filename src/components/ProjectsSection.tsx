@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import SectionTitle from './SectionTitle';
+import OptimizedImage from './OptimizedImage';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { useLang } from '../context/LanguageContext';
 
 // ── project image imports ─────────────────────────────────────────────────────
 import picture1 from '../assets/image_project/website/picture-1.png';
 import pigFriends from '../assets/image_project/website/pig-friends.png';
+import beeCook from '../assets/image_project/website/beeCook.png';
+import trihanggo from '../assets/image_project/website/trihanggo.png';
 import plagbleg from '../assets/image_project/website/plagbleg.png';
 import sayurMart from '../assets/image_project/website/sayur-mart.png';
 import klinikHewan from '../assets/image_project/website/KlinikHewan.png';
@@ -14,6 +18,7 @@ import trilokasMobile from '../assets/image_project/mobile/Trilokas-mobile.png';
 import pmbsma from '../assets/image_project/mobile/pmbsma.png';
 import kenzyToys from '../assets/image_project/mobile/KenzyToys.jpg';
 import klinikGigi from '../assets/image_project/mobile/KlinikGigi.jpg';
+
 
 // ── types ─────────────────────────────────────────────────────────────────────
 type ProjectType = 'website' | 'mobile';
@@ -25,23 +30,51 @@ interface Project {
   imageSrc: string;
   type: ProjectType;
   accent: string;
-  aspectRatio?: string;   // CSS aspect-ratio value, e.g. '1851 / 923'
+  aspectRatio?: string;   
   liveUrl?: string;
   repoUrl?: string;
+  detailFolder?: string; 
 }
+
+// ── Helper function to load project detail images ────────────────────────────
+const detailImageModules = import.meta.glob('../assets/project_detail/**/*.{png,jpg,jpeg}', { eager: true });
+
+const loadProjectDetailImages = (folderName: string): string[] => {
+  const images: string[] = [];
+  const folderPath = `../assets/project_detail/${folderName}/`;
+  
+  // Get all images for this folder and sort them numerically
+  Object.entries(detailImageModules).forEach(([path, module]) => {
+    if (path.includes(`/${folderName}/`)) {
+      images.push((module as { default: string }).default);
+    }
+  });
+  
+  // Sort images by filename (1.png, 2.png, etc.)
+  images.sort((a, b) => {
+    const getNumber = (path: string) => {
+      const match = path.match(/\/(\d+)\.(png|jpg|jpeg)$/);
+      return match ? parseInt(match[1]) : 0;
+    };
+    return getNumber(a) - getNumber(b);
+  });
+  
+  return images;
+};
 
 // ── data ─────────────────────────────────────────────────────────────────────
 const PROJECTS: Project[] = [
   {
     title: 'Pig Friends',
     description:
-      'Website komunitas & informasi seputar perawatan guinea pig. Menampilkan panduan, galeri, dan forum diskusi interaktif.',
+      'Website sistem pakar untuk diagnosa penyakit babi. Menampilkan panduan, galeri, dan forum diskusi interaktif dengan pakar.',
     tech: ['React', 'Tailwind CSS', 'Vite'],
     imageSrc: pigFriends,
     type: 'website',
     accent: '#B9FF66',
     aspectRatio: '1851 / 923',
     repoUrl: 'https://github.com',
+    detailFolder: 'pig_friend',
   },
   {
     title: 'Plagbleg',
@@ -53,6 +86,31 @@ const PROJECTS: Project[] = [
     accent: '#C8B4FA',
     aspectRatio: '1664 / 898',
     repoUrl: 'https://github.com',
+    detailFolder: 'plagbleg',
+  },
+  {
+    title: 'BeeCook',
+    description:
+      'Platform resep masakan dan kelas memasak online dengan fitur komunitas chef dan video tutorial interaktif.',
+    tech: ['React', 'Firebase', 'Tailwind CSS'],
+    imageSrc: beeCook,
+    type: 'website',
+    accent: '#FFA500',
+    aspectRatio: '16 / 9',
+    repoUrl: 'https://github.com',
+    detailFolder: 'beeCook',
+  },
+  {
+    title: 'Trihanggo',
+    description:
+      'Website sistem informasi desa Trihanggo untuk layanan administrasi dan informasi publik warga.',
+    tech: ['Laravel', 'MySQL', 'Bootstrap'],
+    imageSrc: trihanggo,
+    type: 'website',
+    accent: '#10B981',
+    aspectRatio: '16 / 9',
+    repoUrl: 'https://github.com',
+    detailFolder: 'Trihanggo',
   },
   {
     title: 'Klinik Hewan Dashboard',
@@ -64,6 +122,7 @@ const PROJECTS: Project[] = [
     accent: '#60A5FA',
     aspectRatio: '16 / 9',
     repoUrl: 'https://github.com',
+    detailFolder: 'klinik_hewan',
   },
   {
     title: 'Klinik Kecantikan Dashboard',
@@ -75,17 +134,19 @@ const PROJECTS: Project[] = [
     accent: '#F472B6',
     aspectRatio: '16 / 9',
     repoUrl: 'https://github.com',
+    detailFolder: 'klinik_kecantikan',
   },
   {
-    title: 'Trilokas',
+    title: 'Triloka',
     description:
-      'Aplikasi mobile eksplorasi budaya & destinasi wisata berbasis lokasi dengan pengalaman visual imersif.',
+      'Aplikasi mobile deteksi mood untuk auto play musik sesuai dengan kondisi mood',
     tech: ['Flutter', 'Dart', 'Firebase'],
     imageSrc: trilokasMobile,
     type: 'mobile',
     accent: '#FFD166',
     aspectRatio: '244 / 522',
     repoUrl: 'https://github.com',
+    detailFolder: 'trilokas',
   },
   {
     title: 'Kenzy Toys',
@@ -97,6 +158,7 @@ const PROJECTS: Project[] = [
     accent: '#FCD34D',
     aspectRatio: '9 / 16',
     repoUrl: 'https://github.com',
+    detailFolder: 'kenzy_toys',
   },
   {
     title: 'Klinik Gigi',
@@ -108,28 +170,31 @@ const PROJECTS: Project[] = [
     accent: '#34D399',
     aspectRatio: '9 / 16',
     repoUrl: 'https://github.com',
+    detailFolder: 'klinik_gigi',
   },
   {
-    title: 'Picture',
+    title: 'Deteksi Angka',
     description:
-      'Aplikasi web berbagi dan eksplorasi foto dengan tampilan galeri modern dan fitur pencarian cepat.',
+      'Website deteksi angka menggunakan KNN',
     tech: ['React', 'Tailwind CSS'],
     imageSrc: picture1,
     type: 'website',
     accent: '#FF6B6B',
     aspectRatio: '752 / 475',
     repoUrl: 'https://github.com',
+    detailFolder: 'detection_image',
   },
   {
     title: 'Sayur Mart',
     description:
-      'Platform e-commerce sayur dan buah segar dengan sistem pemesanan online yang mudah digunakan.',
+      'Platform e-commerce sayur segar dengan sistem pemesanan online yang mudah digunakan.',
     tech: ['React', 'Node.js', 'MongoDB'],
     imageSrc: sayurMart,
     type: 'website',
     accent: '#6EE7B7',
     aspectRatio: '784 / 556',
     repoUrl: 'https://github.com',
+    detailFolder: 'sayur_mart',
   },
   {
     title: 'PMB SMA',
@@ -141,6 +206,31 @@ const PROJECTS: Project[] = [
     accent: '#93C5FD',
     aspectRatio: '248 / 531',
     repoUrl: 'https://github.com',
+    detailFolder: 'pmb_sma',
+  },
+  {
+    title: 'BeeCook',
+    description:
+      'Website belajar resep makanan yang minimalis',
+    tech: ['React', 'Tailwind CSS'],
+    imageSrc: beeCook,
+    type: 'website',
+    accent: '#B9FF66',
+    aspectRatio: '240 / 923',
+    repoUrl: 'https://github.com',
+    detailFolder: 'beeCook',
+  },
+  {
+    title: 'Trihanggo',
+    description:
+      'Website Jual Beli Mesin Printing',
+    tech: ['Next Js', 'Tailwind CSS','Supabase'],
+    imageSrc: trihanggo,
+    type: 'website',
+    accent: '#B9FF66',
+    aspectRatio: '240 / 923',
+    repoUrl: 'https://github.com',
+    detailFolder: 'trihanggo',
   },
 ];
 
@@ -162,12 +252,15 @@ const ExternalIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
 // ── ImageModal ────────────────────────────────────────────────────────────────
 interface ImageModalProps {
   isOpen: boolean;
-  imageSrc: string;
+  images: string[];
   title: string;
+  projectType: ProjectType;
   onClose: () => void;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClose }) => {
+const ImageModal: React.FC<ImageModalProps> = ({ isOpen, images, title, projectType, onClose }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -198,7 +291,42 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClos
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  // Reset current index when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentIndex(0);
+    }
+  }, [isOpen]);
+
+  // Preload adjacent images for faster navigation
+  useEffect(() => {
+    if (isOpen && images.length > 1) {
+      const preloadImage = (src: string) => {
+        const img = new Image();
+        img.src = src;
+      };
+
+      // Preload next and previous images
+      const nextIndex = (currentIndex + 1) % images.length;
+      const prevIndex = (currentIndex - 1 + images.length) % images.length;
+      
+      if (images[nextIndex]) preloadImage(images[nextIndex]);
+      if (images[prevIndex]) preloadImage(images[prevIndex]);
+    }
+  }, [currentIndex, images, isOpen]);
+
+  if (!isOpen || images.length === 0) return null;
+
+  // Determine if we should show marquee
+  const showMarquee = projectType === 'website' ? images.length > 1 : images.length > 4;
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
 
   // Render modal using portal to body element
   return createPortal(
@@ -216,33 +344,100 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClos
         overflow: 'hidden',
       }}
     >
-      {/* Close button - fixed to viewport */}
+      {/* Close button - responsive positioning */}
       <button
         onClick={onClose}
-        className="fixed top-4 right-4 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 cursor-pointer z-[10001]"
+        className="fixed top-2 right-2 sm:top-4 sm:right-4 md:top-6 md:right-6 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 cursor-pointer z-[10001]"
         aria-label="Close modal"
       >
-        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      {/* Modal content - centered in viewport */}
+      {/* Project title - responsive */}
+      <div className="fixed top-2 left-2 sm:top-4 sm:left-4 md:top-6 md:left-6 z-[10001] max-w-[60%] sm:max-w-none">
+        <h3 className="text-white text-sm sm:text-base md:text-lg lg:text-xl font-bold truncate">{title}</h3>
+        <p className="text-white/70 text-xs sm:text-sm">{currentIndex + 1} / {images.length}</p>
+      </div>
+
+      {/* Modal content - responsive layout */}
       <div
-        className="flex items-center justify-center w-full h-full p-4 sm:p-6 md:p-8 animate-scaleIn"
+        className="flex flex-col items-center justify-center w-full h-full px-2 py-16 sm:px-4 sm:py-20 md:px-6 md:py-8 lg:px-8 animate-scaleIn"
         onClick={(e) => e.stopPropagation()}
       >
-        <img
-          src={imageSrc}
-          alt={title}
-          className="object-contain rounded-lg sm:rounded-xl shadow-2xl"
-          style={{ 
-            maxWidth: 'calc(100vw - 2rem)',
-            maxHeight: 'calc(100vh - 2rem)',
-            width: 'auto',
-            height: 'auto',
-          }}
-        />
+        {/* Main image display - responsive container */}
+        <div className="relative flex items-center justify-center w-full h-full max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)]">
+          {/* Previous button - responsive */}
+          {showMarquee && (
+            <button
+              onClick={handlePrevious}
+              className="absolute left-1 sm:left-2 md:left-4 z-10 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 cursor-pointer"
+              aria-label="Previous image"
+            >
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+
+          {/* Image - fully responsive */}
+          <OptimizedImage
+            src={images[currentIndex]}
+            alt={`${title} - ${currentIndex + 1}`}
+            className="object-contain rounded-md sm:rounded-lg md:rounded-xl shadow-2xl transition-opacity duration-300"
+            style={{ 
+              maxWidth: 'calc(100vw - 4rem)',
+              maxHeight: 'calc(100vh - 12rem)',
+              width: 'auto',
+              height: 'auto',
+            }}
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 80vw, 70vw"
+          />
+
+          {/* Next button - responsive */}
+          {showMarquee && (
+            <button
+              onClick={handleNext}
+              className="absolute right-1 sm:right-2 md:right-4 z-10 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 cursor-pointer"
+              aria-label="Next image"
+            >
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          )}
+        </div>
+
+        {/* Thumbnail marquee - responsive */}
+        {showMarquee && (
+          <div className="fixed bottom-2 sm:bottom-4 left-0 right-0 z-[10001] px-2 sm:px-4 md:px-6">
+            <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+              {images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`flex-shrink-0 snap-start rounded-md sm:rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
+                    idx === currentIndex
+                      ? 'border-white scale-105'
+                      : 'border-white/30 hover:border-white/60'
+                  }`}
+                  style={{
+                    width: projectType === 'mobile' ? '48px' : '80px',
+                    height: projectType === 'mobile' ? '80px' : '48px',
+                  }}
+                >
+                  <OptimizedImage
+                    src={img}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                    sizes="100px"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>,
     document.body
@@ -253,18 +448,27 @@ const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClos
 interface BentoCardProps {
   project: Project;
   variant: 'featured' | 'tall' | 'normal';
-  onImageClick: () => void;
+  onImageClick: (images: string[], title: string, type: ProjectType) => void;
 }
 
 const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick }) => {
   const [hovered, setHovered] = useState(false);
   const isMobile = project.type === 'mobile';
 
+  // Load detail images
+  const detailImages = project.detailFolder ? loadProjectDetailImages(project.detailFolder) : [];
+  
+  const handleImageClick = () => {
+    // If no detail images found, use the main image
+    const imagesToShow = detailImages.length > 0 ? detailImages : [project.imageSrc];
+    onImageClick(imagesToShow, project.title, project.type);
+  };
+
   // Mobile card: phone-frame beside info (horizontal layout)
   if (isMobile) {
     return (
       <div
-        className={`group relative flex flex-col sm:flex-row overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white h-[550px] ${hovered ? '-translate-y-1' : ''}`}
+        className={`group relative flex flex-col sm:flex-row overflow-hidden rounded-[20px] sm:rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white min-h-[400px] sm:h-[500px] lg:h-[550px] ${hovered ? '-translate-y-1' : ''}`}
         style={{ boxShadow: hovered ? '0px 8px 0px #191A23' : '0px 5px 0px #191A23' }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -273,45 +477,46 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
         <div className="absolute top-0 left-0 right-0 h-1.5 z-10" style={{ background: project.accent }} />
 
         {/* phone mockup panel — sized to fit the portrait image */}
-        <div className="flex items-center justify-center bg-[#F0F2F5] px-8 py-8 sm:w-[220px] shrink-0">
+        <div className="flex items-center justify-center bg-[#F0F2F5] px-6 py-6 sm:px-8 sm:py-8 sm:w-[200px] lg:w-[220px] shrink-0">
           {/* phone shell — aspect ratio matches actual screenshot */}
           <div 
-            className="relative w-[108px] cursor-pointer" 
+            className="relative w-[90px] sm:w-[100px] lg:w-[108px] cursor-pointer" 
             style={{ aspectRatio: project.aspectRatio ?? '244 / 522' }}
-            onClick={onImageClick}
+            onClick={handleImageClick}
           >
             {/* shell */}
-            <div className="absolute inset-0 rounded-[22px] bg-[#191A23] shadow-xl" />
+            <div className="absolute inset-0 rounded-[20px] sm:rounded-[22px] bg-[#191A23] shadow-xl" />
             {/* screen inset */}
-            <div className="absolute inset-[5px] rounded-[18px] overflow-hidden bg-black">
-              <img
+            <div className="absolute inset-[4px] sm:inset-[5px] rounded-[16px] sm:rounded-[18px] overflow-hidden bg-black">
+              <OptimizedImage
                 src={project.imageSrc}
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 640px) 100px, 120px"
               />
             </div>
             {/* notch */}
-            <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[32px] h-[6px] rounded-full bg-[#191A23] z-10" />
+            <div className="absolute top-[8px] sm:top-[10px] left-1/2 -translate-x-1/2 w-[28px] sm:w-[32px] h-[5px] sm:h-[6px] rounded-full bg-[#191A23] z-10" />
             {/* home bar */}
-            <div className="absolute bottom-[9px] left-1/2 -translate-x-1/2 w-[28px] h-[3px] rounded-full bg-white/30 z-10" />
+            <div className="absolute bottom-[8px] sm:bottom-[9px] left-1/2 -translate-x-1/2 w-[24px] sm:w-[28px] h-[2.5px] sm:h-[3px] rounded-full bg-white/30 z-10" />
           </div>
         </div>
 
         {/* info */}
-        <div className="flex flex-col gap-3 p-6 justify-center flex-1">
+        <div className="flex flex-col gap-2 sm:gap-3 p-4 sm:p-5 lg:p-6 justify-center flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="text-[#09090B] text-lg font-bold leading-snug">{project.title}</h3>
+            <h3 className="text-[#09090B] text-base sm:text-lg font-bold leading-snug line-clamp-2">{project.title}</h3>
             <span
-              className="shrink-0 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-[#191A23]"
+              className="shrink-0 text-[9px] sm:text-[10px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-full border border-[#191A23]"
               style={{ background: project.accent }}
             >
               Mobile
             </span>
           </div>
-          <p className="text-[#4B5563] text-sm leading-relaxed">{project.description}</p>
-          <div className="flex flex-wrap gap-1.5">
+          <p className="text-[#4B5563] text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">{project.description}</p>
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
             {project.tech.map((t) => (
-              <span key={t} className="text-[10px] font-medium border border-[#191A23] px-2 py-0.5 rounded-full text-[#191A23]">
+              <span key={t} className="text-[9px] sm:text-[10px] font-medium border border-[#191A23] px-1.5 sm:px-2 py-0.5 rounded-full text-[#191A23]">
                 {t}
               </span>
             ))}
@@ -320,18 +525,11 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full border border-[#191A23] cursor-pointer transition-colors duration-200 hover:opacity-80"
+                className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-[#191A23] cursor-pointer transition-colors duration-200 hover:opacity-80"
                 style={{ background: project.accent }}>
-                <ExternalIcon className="w-3 h-3" /> Live
+                <ExternalIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Live
               </a>
             )}
-            {/* {project.repoUrl && (
-              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 bg-[#191A23] text-white text-xs font-bold px-3 py-1.5 rounded-full cursor-pointer transition-colors duration-200 hover:bg-[#2d2f3a]">
-                <GithubIcon className="w-3 h-3" /> Repo
-              </a>
-            )} */}
           </div>
         </div>
       </div>
@@ -343,7 +541,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
 
   return (
     <div
-      className={`group relative flex flex-col overflow-hidden rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white h-[550px] ${hovered ? '-translate-y-1' : ''}`}
+      className={`group relative flex flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-[#191A23] cursor-pointer transition-all duration-300 bg-white min-h-[400px] sm:h-[500px] lg:h-[550px] ${hovered ? '-translate-y-1' : ''}`}
       style={{ boxShadow: hovered ? '0px 8px 0px #191A23' : '0px 5px 0px #191A23' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -351,51 +549,50 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
       {/* accent stripe */}
       <div className="absolute top-0 left-0 right-0 h-1.5 z-10" style={{ background: project.accent }} />
 
-      {/* browser chrome + screenshot */}
-      <div className="relative cursor-pointer" style={{ aspectRatio }} onClick={onImageClick}>
-        {/* screenshot — fills the aspect-ratio box, nudged down by browser bar height */}
+      {/* browser chrome + screenshot - with max-height to prevent overflow */}
+      <div className="relative cursor-pointer overflow-hidden" 
+        style={{ 
+          aspectRatio,
+          maxHeight: '380px', // Limit image height to show description
+        }} 
+        onClick={handleImageClick}>
+        {/* screenshot — fills the aspect-ratio box */}
         <div className="absolute inset-0 overflow-hidden bg-[#F9F9F9]">
-          <img
+          <OptimizedImage
             src={project.imageSrc}
             alt={project.title}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
 
         {/* hover overlay */}
-        <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 z-20">
+        <div className="absolute inset-0 bg-black/55 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 sm:gap-3 z-20">
           {project.liveUrl && (
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 bg-[#B9FF66] text-black text-xs font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-[#a8f050] transition-colors duration-200">
-              <ExternalIcon className="w-3.5 h-3.5" /> Live
+              className="flex items-center gap-1 sm:gap-1.5 bg-[#B9FF66] text-black text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full cursor-pointer hover:bg-[#a8f050] transition-colors duration-200">
+              <ExternalIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Live
             </a>
           )}
-          {/* {project.repoUrl && (
-            <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 bg-white text-black text-xs font-bold px-4 py-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-200">
-              <GithubIcon className="w-3.5 h-3.5" /> Repo
-            </a>
-          )} */}
         </div>
       </div>
 
-      {/* info */}
-      <div className="p-5 flex flex-col gap-2.5 flex-1">
+      {/* info - flex-1 to fill remaining space */}
+      <div className="p-4 sm:p-5 flex flex-col gap-2 sm:gap-2.5 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-[#09090B] text-base font-bold leading-snug">{project.title}</h3>
+          <h3 className="text-[#09090B] text-sm sm:text-base font-bold leading-snug line-clamp-2">{project.title}</h3>
           <span
-            className="shrink-0 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-[#191A23]"
+            className="shrink-0 text-[9px] sm:text-[10px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-full border border-[#191A23]"
             style={{ background: project.accent }}
           >
             Website
           </span>
         </div>
-        <p className="text-[#4B5563] text-sm leading-relaxed line-clamp-2">{project.description}</p>
-        <div className="flex flex-wrap gap-1.5 pt-1">
+        <p className="text-[#4B5563] text-xs sm:text-sm leading-relaxed line-clamp-3">{project.description}</p>
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 pt-1">
           {project.tech.map((t) => (
-            <span key={t} className="text-[10px] font-medium border border-[#191A23] px-2 py-0.5 rounded-full text-[#191A23]">
+            <span key={t} className="text-[9px] sm:text-[10px] font-medium border border-[#191A23] px-1.5 sm:px-2 py-0.5 rounded-full text-[#191A23]">
               {t}
             </span>
           ))}
@@ -410,8 +607,9 @@ type FilterType = 'all' | 'website' | 'mobile';
 
 const ProjectsSection: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLang();
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-  const [modalImage, setModalImage] = useState<{ src: string; title: string } | null>(null);
+  const [modalData, setModalData] = useState<{ images: string[]; title: string; type: ProjectType } | null>(null);
 
   const filtered =
     activeFilter === 'all'
@@ -424,38 +622,39 @@ const ProjectsSection: React.FC = () => {
     { label: 'Mobile', value: 'mobile' },
   ];
 
-  const handleImageClick = (imageSrc: string, title: string) => {
-    setModalImage({ src: imageSrc, title });
+  const handleImageClick = (images: string[], title: string, type: ProjectType) => {
+    setModalData({ images, title, type });
   };
 
   const handleCloseModal = () => {
-    setModalImage(null);
+    setModalData(null);
   };
 
   return (
     <div
       ref={ref}
-      className={`w-full max-w-[1440px]  scroll-animate ${isVisible ? 'visible' : ''}`}
+      className={`w-full max-w-[1440px] mx-auto scroll-animate ${isVisible ? 'visible' : ''}`}
     >
       {/* Image Modal */}
       <ImageModal
-        isOpen={modalImage !== null}
-        imageSrc={modalImage?.src ?? ''}
-        title={modalImage?.title ?? ''}
+        isOpen={modalData !== null}
+        images={modalData?.images ?? []}
+        title={modalData?.title ?? ''}
+        projectType={modalData?.type ?? 'website'}
         onClose={handleCloseModal}
       />
 
       <SectionTitle
-        title="Projects"
-        description="Kumpulan proyek yang saya kerjakan — dari web hingga mobile"
+        title={t.projects.sectionTitle}
+        description={t.projects.sectionDesc}
       />
-      {/* filter tabs */}
-      <div className="flex items-center gap-2 px-4 lg:px-[100px] mb-8">
+      {/* filter tabs - responsive */}
+      {/* <div className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 lg:px-[100px] mb-6 sm:mb-8">
         {filters.map((f) => (
           <button
             key={f.value}
             onClick={() => setActiveFilter(f.value)}
-            className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold border border-[#191A23] transition-colors duration-200
+            className={`cursor-pointer px-3 sm:px-4 lg:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold border border-[#191A23] transition-colors duration-200
               ${activeFilter === f.value
                 ? 'bg-[#191A23] text-white'
                 : 'bg-white text-[#191A23] hover:bg-[#F3F3F3]'
@@ -464,101 +663,117 @@ const ProjectsSection: React.FC = () => {
             {f.label}
           </button>
         ))}
-      </div>
+      </div> */}
 
-      {/* ── BENTO GRID ── */}
-      <div className="px-4 lg:px-[100px] mb-6 lg:mb-8">
+      {/* ── BENTO GRID - Responsive ── */}
+      <div className="px-4 sm:px-6 lg:px-[100px] mb-6 lg:mb-8">
         {activeFilter === 'all' ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-fr">
+          <div className="flex flex-col gap-4 sm:gap-5 md:grid md:grid-cols-2 lg:grid-cols-3 md:auto-rows-fr">
             {/* Row 1: Large (2 cols) + Small (1 col) */}
-            <div className="md:col-span-2 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-2">
               <BentoCard 
                 project={PROJECTS[1]} 
                 variant="featured" 
-                onImageClick={() => handleImageClick(PROJECTS[1].imageSrc, PROJECTS[1].title)}
+                onImageClick={handleImageClick}
               />
             </div>
-            <div className="md:col-span-1 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-1">
               <BentoCard 
-                project={PROJECTS[4]} 
+                project={PROJECTS[6]} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(PROJECTS[4].imageSrc, PROJECTS[4].title)}
+                onImageClick={handleImageClick}
               />
             </div>
 
             {/* Row 2: Small (1 col) + Large (2 cols) */}
-            <div className="md:col-span-1 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-1">
               <BentoCard 
                 project={PROJECTS[0]} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(PROJECTS[0].imageSrc, PROJECTS[0].title)}
+                onImageClick={handleImageClick}
               />
             </div>
-            <div className="md:col-span-2 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-2">
               <BentoCard 
                 project={PROJECTS[2]} 
                 variant="featured" 
-                onImageClick={() => handleImageClick(PROJECTS[2].imageSrc, PROJECTS[2].title)}
+                onImageClick={handleImageClick}
               />
             </div>
 
             {/* Row 3: Large (2 cols) + Small (1 col) */}
-            <div className="md:col-span-2 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-2">
               <BentoCard 
                 project={PROJECTS[3]} 
                 variant="featured" 
-                onImageClick={() => handleImageClick(PROJECTS[3].imageSrc, PROJECTS[3].title)}
+                onImageClick={handleImageClick}
               />
             </div>
-            <div className="md:col-span-1 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-1">
               <BentoCard 
-                project={PROJECTS[5]} 
+                project={PROJECTS[7]} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(PROJECTS[5].imageSrc, PROJECTS[5].title)}
+                onImageClick={handleImageClick}
               />
             </div>
 
             {/* Row 4: Small (1 col) + Large (2 cols) */}
-            <div className="md:col-span-1 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-1">
               <BentoCard 
-                project={PROJECTS[6]} 
+                project={PROJECTS[8]} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(PROJECTS[6].imageSrc, PROJECTS[6].title)}
+                onImageClick={handleImageClick}
               />
             </div>
-            <div className="md:col-span-2 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-2">
               <BentoCard 
-                project={PROJECTS[7]} 
+                project={PROJECTS[4]} 
                 variant="featured" 
-                onImageClick={() => handleImageClick(PROJECTS[7].imageSrc, PROJECTS[7].title)}
+                onImageClick={handleImageClick}
               />
             </div>
 
-            {/* Row 5: Two cards */}
-            <div className="md:col-span-2 md:row-span-1">
+            {/* Row 5: Two website projects side by side - always 50/50 */}
+            <div className="md:col-span-2 lg:col-span-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                <BentoCard 
+                  project={PROJECTS[5]} 
+                  variant="featured" 
+                  onImageClick={handleImageClick}
+                />
+                <BentoCard 
+                  project={PROJECTS[9]} 
+                  variant="featured" 
+                  onImageClick={handleImageClick}
+                />
+              </div>
+            </div>
+
+            {/* Row 6: Large (2 cols) + Small (1 col) */}
+            <div className="md:col-span-2 lg:col-span-2">
               <BentoCard 
-                project={PROJECTS[8]} 
+                project={PROJECTS[10]} 
                 variant="featured" 
-                onImageClick={() => handleImageClick(PROJECTS[8].imageSrc, PROJECTS[8].title)}
+                onImageClick={handleImageClick}
               />
             </div>
-            <div className="md:col-span-1 md:row-span-1">
+            <div className="md:col-span-2 lg:col-span-1">
               <BentoCard 
-                project={PROJECTS[9]} 
+                project={PROJECTS[11]} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(PROJECTS[9].imageSrc, PROJECTS[9].title)}
+                onImageClick={handleImageClick}
               />
             </div>
           </div>
         ) : (
-          /* filtered view */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          /* filtered view - responsive */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {filtered.map((p) => (
               <BentoCard 
                 key={p.title} 
                 project={p} 
                 variant="normal" 
-                onImageClick={() => handleImageClick(p.imageSrc, p.title)}
+                onImageClick={handleImageClick}
               />
             ))}
           </div>

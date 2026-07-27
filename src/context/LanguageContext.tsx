@@ -54,38 +54,76 @@ export const translations = {
     experience: {
       sectionTitle: 'Work Experience',
       sectionDesc: 'My professional journey and career milestones in web development',
+      responsibilitiesLabel: 'Responsibilities:',
+      collapseLabel: 'Collapse',
+      expandLabel: 'Expand',
       items: [
         {
-          number: '01',
-          title: 'Senior Frontend Developer',
-          company: 'Tech Company A',
-          period: 'Jan 2022 – Present',
-          description:
-            'Led the development of responsive web applications using React, TypeScript, and modern CSS frameworks. Collaborated with cross-functional teams to deliver high-quality products. Mentored junior developers and conducted code reviews to maintain code quality standards.',
+          number: '10 months',
+          title: 'Front-End Developer (React.js & Vue.js)',
+          company: 'PT Gama Integra Informatika',
+          location: 'Sleman, Yogyakarta',
+          period: 'October 2025 – June 2026',
+          responsibilities: [
+            'Developed and implemented modern UI/UX designs into responsive, interactive, and user-friendly web applications using React.js, Vue.js, and TypeScript.',
+            'Integrated REST APIs with backend for data management, authentication, and implementation of various business features.',
+            'Prepared technical documentation regarding component structure, API usage, and system development flow to facilitate maintenance and further development.',
+            'Performed debugging, bug fixes, code refactoring, and application performance optimization to ensure the system runs stably, efficiently, and is easy to maintain.',
+            'Collaborated with UI/UX Designers, Back-End Developers, and related teams in the application development process.',
+          ],
         },
         {
-          number: '02',
-          title: 'Frontend Developer',
-          company: 'Startup B',
-          period: 'Jun 2020 – Dec 2021',
-          description:
-            'Developed and maintained multiple client-facing web applications. Implemented responsive designs and ensured cross-browser compatibility. Worked closely with designers to transform mockups into functional interfaces.',
+          number: '6 months',
+          title: 'Front-End Developer Intern (Vue.js)',
+          company: 'G Media',
+          location: 'Sleman, Yogyakarta',
+          period: 'January 2025 – June 2025',
+          responsibilities: [
+            'Implemented UI/UX designs from mockups into web application interfaces using Vue.js.',
+            'Developed and maintained responsive, interactive, and user-friendly interface components.',
+            'Collaborated with the development team in implementing new features and system improvements.',
+            'Prepared technical documentation related to component structure, feature implementation, and development flow to facilitate maintenance and further development.',
+            'Conducted testing and debugging to ensure the application runs properly.',
+          ],
         },
         {
-          number: '03',
-          title: 'Junior Web Developer',
-          company: 'Agency C',
-          period: 'Jan 2019 – May 2020',
-          description:
-            'Built interactive web pages using HTML, CSS, and JavaScript. Assisted senior developers in implementing new features and fixing bugs. Participated in daily stand-ups and sprint planning meetings.',
-        },
-        {
-          number: '04',
-          title: 'Web Developer Intern',
-          company: 'Company D',
-          period: 'Jun 2018 – Dec 2018',
-          description:
-            'Learned web development fundamentals and best practices. Contributed to small features and bug fixes under supervision. Gained experience with version control systems and agile methodologies.',
+          number: '1 year',
+          title: 'Teaching Assistant',
+          company: 'Universitas Teknologi Yogyakarta',
+          location: 'Sleman, Yogyakarta',
+          period: 'February 2024 – February 2025',
+          roles: [
+            {
+              name: 'Information Technology Applications',
+              responsibilities: [
+                'Assisted lecturers in conducting practicum sessions and substituted for lecturers during the learning process.',
+                'Guided students in using applications and implementing information technology in practicum case studies.',
+                'Conducted assignment assessments, evaluated practicum results, and provided feedback to students.',
+                'Managed class administration, including recording student attendance.',
+                'Prepared learning recap documents, practicum materials, and evaluation results.',
+              ],
+            },
+            {
+              name: 'Coding and Machine Learning',
+              responsibilities: [
+                'Accompanied the learning process in programming and basic Machine Learning practicum sessions.',
+                'Guided students in the coding, debugging, and Machine Learning algorithm implementation process.',
+                'Substituted for lecturers in practicum sessions and provided guidance on learning assignments.',
+                'Conducted assignment assessments and provided feedback on students\' work results.',
+                'Prepared documentation and practicum result recaps as learning evaluation materials.',
+              ],
+            },
+            {
+              name: 'Database',
+              responsibilities: [
+                'Assisted lecturers in conducting practicum sessions for database design and management.',
+                'Guided students in using SQL, creating queries, and implementing database systems.',
+                'Substituted for lecturers in practicum class assistance when needed.',
+                'Conducted assignment assessments, checked practicum results, and evaluated student learning.',
+                'Managed class administration, including recording attendance and preparing learning recaps.',
+              ],
+            },
+          ],
         },
       ],
     },
@@ -156,6 +194,8 @@ export const translations = {
         languages: 'Languages',
         contact: 'Contact Information',
       },
+
+      educationDesc: 'The academic journey that shaped the foundation of my knowledge and skills',
 
       summary:
         'Passionate Frontend Developer with experience building responsive, high-performance web and mobile applications. Proficient in React, TypeScript, and modern CSS frameworks. Strong problem-solving skills, eye for design, and commitment to clean, maintainable code.',
@@ -249,38 +289,76 @@ export const translations = {
     experience: {
       sectionTitle: 'Pengalaman Kerja',
       sectionDesc: 'Perjalanan profesional dan pencapaian karier saya dalam pengembangan web',
+      responsibilitiesLabel: 'Tanggung Jawab:',
+      collapseLabel: 'Tutup',
+      expandLabel: 'Buka',
       items: [
         {
-          number: '01',
-          title: 'Senior Frontend Developer',
-          company: 'Tech Company A',
-          period: 'Jan 2022 – Sekarang',
-          description:
-            'Memimpin pengembangan aplikasi web responsif menggunakan React, TypeScript, dan framework CSS modern. Berkolaborasi dengan tim lintas fungsi untuk menghasilkan produk berkualitas tinggi. Membimbing pengembang junior dan melakukan code review.',
+          number: '10 bulan',
+          title: 'Front-End Developer (React.js & Vue.js)',
+          company: 'PT Gama Integra Informatika',
+          location: 'Sleman, Yogyakarta',
+          period: 'Oktober 2025 – Juni 2026',
+          responsibilities: [
+            'Mengembangkan dan mengimplementasikan desain UI/UX modern menjadi aplikasi web yang responsif, interaktif, dan user-friendly menggunakan React.js, Vue.js, dan TypeScript.',
+            'Melakukan integrasi REST API dengan backend untuk pengelolaan data, autentikasi, serta implementasi berbagai fitur bisnis.',
+            'Menyusun dokumentasi teknis mengenai struktur komponen, penggunaan API, serta alur pengembangan sistem untuk memudahkan maintenance dan pengembangan lanjutan.',
+            'Melakukan debugging, perbaikan bug, refactoring kode, serta optimasi performa aplikasi agar sistem berjalan stabil, efisien, dan mudah dipelihara.',
+            'Berkolaborasi dengan UI/UX Designer, Back-End Developer, dan tim terkait dalam proses pengembangan aplikasi.',
+          ],
         },
         {
-          number: '02',
-          title: 'Frontend Developer',
-          company: 'Startup B',
-          period: 'Jun 2020 – Des 2021',
-          description:
-            'Mengembangkan dan memelihara berbagai aplikasi web yang berhubungan dengan klien. Mengimplementasikan desain responsif dan memastikan kompatibilitas lintas browser.',
+          number: '6 bulan',
+          title: 'Front-End Developer Intern (Vue.js)',
+          company: 'G Media',
+          location: 'Sleman, Yogyakarta',
+          period: 'Januari 2025 – Juni 2025',
+          responsibilities: [
+            'Mengimplementasikan desain UI/UX dari mockup menjadi antarmuka aplikasi web menggunakan Vue.js.',
+            'Mengembangkan dan memelihara komponen antarmuka yang responsif, interaktif, dan mudah digunakan.',
+            'Berkolaborasi dengan tim pengembang dalam implementasi fitur baru dan penyempurnaan sistem.',
+            'Menyusun dokumentasi teknis terkait struktur komponen, implementasi fitur, serta alur pengembangan untuk memudahkan maintenance dan pengembangan lanjutan.',
+            'Melakukan testing dan debugging untuk memastikan aplikasi berjalan dengan baik.',
+          ],
         },
         {
-          number: '03',
-          title: 'Junior Web Developer',
-          company: 'Agency C',
-          period: 'Jan 2019 – Mei 2020',
-          description:
-            'Membangun halaman web interaktif menggunakan HTML, CSS, dan JavaScript. Membantu pengembang senior dalam mengimplementasikan fitur baru dan memperbaiki bug.',
-        },
-        {
-          number: '04',
-          title: 'Magang Web Developer',
-          company: 'Company D',
-          period: 'Jun 2018 – Des 2018',
-          description:
-            'Mempelajari dasar-dasar dan praktik terbaik pengembangan web. Berkontribusi pada fitur kecil dan perbaikan bug di bawah pengawasan.',
+          number: '1 tahun',
+          title: 'Asisten Dosen',
+          company: 'Universitas Teknologi Yogyakarta',
+          location: 'Sleman, Yogyakarta',
+          period: 'Februari 2024 – Februari 2025',
+          roles: [
+            {
+              name: 'Aplikasi Teknologi Informasi',
+              responsibilities: [
+                'Membantu dosen dalam pelaksanaan praktikum serta menggantikan peran dosen saat proses pembelajaran berlangsung.',
+                'Membimbing mahasiswa dalam penggunaan aplikasi dan implementasi teknologi informasi pada studi kasus praktikum.',
+                'Melakukan penilaian tugas, evaluasi hasil praktikum, serta memberikan umpan balik kepada mahasiswa.',
+                'Mengelola administrasi kelas, termasuk pencatatan kehadiran mahasiswa.',
+                'Menyusun dokumen rekap pembelajaran, materi praktikum, dan hasil evaluasi.',
+              ],
+            },
+            {
+              name: 'Coding dan Machine Learning',
+              responsibilities: [
+                'Mendampingi proses pembelajaran praktikum pemrograman dan dasar Machine Learning.',
+                'Membimbing mahasiswa dalam proses coding, debugging, serta implementasi algoritma Machine Learning.',
+                'Menggantikan dosen dalam sesi praktikum serta memberikan arahan terkait tugas pembelajaran.',
+                'Melakukan penilaian tugas dan memberikan feedback terhadap hasil pekerjaan mahasiswa.',
+                'Menyusun dokumentasi dan rekap hasil praktikum sebagai bahan evaluasi pembelajaran.',
+              ],
+            },
+            {
+              name: 'Basis Data',
+              responsibilities: [
+                'Membantu dosen dalam pelaksanaan praktikum perancangan dan pengelolaan basis data.',
+                'Membimbing mahasiswa dalam penggunaan SQL, pembuatan query, serta implementasi sistem basis data.',
+                'Menggantikan dosen dalam pendampingan kelas praktikum apabila diperlukan.',
+                'Melakukan penilaian tugas, pengecekan hasil praktikum, dan evaluasi pembelajaran mahasiswa.',
+                'Mengelola administrasi kelas, termasuk pencatatan absensi dan penyusunan rekap pembelajaran.',
+              ],
+            },
+          ],
         },
       ],
     },
@@ -350,6 +428,8 @@ export const translations = {
         contact: 'Informasi Kontak',
       },
 
+      educationDesc: 'Perjalanan akademik yang membentuk fondasi pengetahuan dan keterampilan saya',
+
       summary:
         'Frontend Developer bersemangat dengan pengalaman membangun aplikasi web dan mobile yang responsif dan berperforma tinggi. Mahir dalam React, TypeScript, dan framework CSS modern. Kemampuan pemecahan masalah yang kuat, kepekaan desain, dan komitmen pada kode yang bersih.',
 
@@ -364,10 +444,10 @@ export const translations = {
 
       education: [
         {
-          degree: 'Sarjana Teknik Informatika',
-          institution: 'Universitas XYZ',
-          period: '2019 – 2023',
-          gpa: 'IPK: 3.82 / 4.00',
+          degree: 'Sarjana Informatika',
+          institution: 'Universitas Teknologi Yogyakarta ',
+          period: '2022 – 2026',
+          gpa: 'IPK: 3.78 / 4.00',
         },
       ],
 

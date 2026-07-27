@@ -1,0 +1,49 @@
+/* Smooth scroll behavior for experience section */
+.experience-section-wrapper {
+  scroll-behavior: smooth;
+}
+
+/* Optimize card transitions */
+.experience-card-wrapper {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Prevent flickering during transitions */
+.experience-card {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth opacity transitions */
+@media (prefers-reduced-motion: no-preference) {
+  .experience-card-wrapper {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .experience-card {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .experience-card-content {
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* For users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .experience-section-wrapper,
+  .experience-card-wrapper,
+  .experience-card,
+  .experience-card-content {
+    transition: none !important;
+  }
+}

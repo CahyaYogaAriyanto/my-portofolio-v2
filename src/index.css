@@ -241,3 +241,67 @@ body.modal-open {
 body.modal-open #root {
   overflow: hidden !important;
 }
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Image loading optimization */
+img {
+  content-visibility: auto;
+}
+
+/* Smooth image fade-in */
+@keyframes imageFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.image-fade-in {
+  animation: imageFadeIn 0.3s ease-out;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  /* Mobile optimizations */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Reduce animations on mobile for better performance */
+  .group:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Tablet optimizations */
+  .bento-card {
+    min-height: 350px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .group-hover\:scale-105 {
+    transform: scale(1) !important;
+  }
+  
+  .group-hover\:scale-\[1\.03\] {
+    transform: scale(1) !important;
+  }
+}

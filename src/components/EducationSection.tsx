@@ -11,7 +11,7 @@ const EducationSection: React.FC = () => {
     <div ref={ref} className={`w-full max-w-[1440px] scroll-animate ${isVisible ? 'visible' : ''}`}>
       <SectionTitle
         title={t.cv.sections.education}
-        description="Perjalanan akademik yang membentuk fondasi pengetahuan dan keterampilan saya"
+        description={t.cv.educationDesc}
       />
       
       <div className="flex flex-col self-stretch max-w-[1234px] mb-[80px] lg:mb-[140px] mx-4 lg:mx-auto gap-[30px]">

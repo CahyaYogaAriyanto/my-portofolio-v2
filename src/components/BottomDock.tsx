@@ -77,7 +77,8 @@ const BottomDock = () => {
 
         {/* Thumbs up (placeholder) */}
         <DockButton aria-label="GitHub" title="GitHub ">
-          <GithubIcon />
+          <a href="https://github.com/CahyaYogaAriyanto"><GithubIcon /></a>
+          
         </DockButton>
 
         {/* Language toggle — shows current opposite lang as label */}

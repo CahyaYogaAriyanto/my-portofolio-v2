@@ -9,10 +9,10 @@ const Footer: React.FC = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#191A23] text-white mt-auto">
-      <div className="max-w-[1440px] mx-auto px-4 lg:px-[100px] py-16 lg:py-20">
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+    <div className="px-4 md:px-8 lg:px-9 pb-4">
+    <footer className="w-full bg-[#191A23] text-white mt-auto rounded-t-[32px] md:rounded-t-[80px] lg:rounded-t-[100px]">
+      <div className="max-w-[1440px]  mx-auto px-4 lg:px-[100px] py-16 lg:py-20">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img 
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
                 </svg>
               </a>
               <a
-                href="https://www.linkedin.com/in/cahya-yoga-ariyanto-b24a3a25a/"
+                href="https://www.linkedin.com/in/cahya-yoga-ariyanto-8b5139261"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-[#F3F3F3] text-black flex items-center justify-center hover:bg-[#B9FF66] transition-colors duration-200 cursor-pointer"
@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
                 <a
-                  href="mailto:cahyayogaariyanto@gmail.com"
+                  href="mailto:cahyayoga10@gmail.com"
                   className="text-white/60 hover:text-white transition-colors duration-200 text-sm"
                 >
                   cahyayoga10@gmail.com
@@ -145,6 +145,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
+    </div>
   );
 };
 
