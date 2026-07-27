@@ -128,7 +128,7 @@ const PROJECTS: Project[] = [
     title: 'Klinik Kecantikan Dashboard',
     description:
       'Platform manajemen pelayanan klinik kecantikan dengan sistem booking, manajemen pelanggan, dan laporan treatment.',
-    tech: ['React', 'Tailwind CSS', 'PostgreSQL'],
+    tech: ['Next Js', 'Tailwind CSS', 'PostgreSQL'],
     imageSrc: klinikKecantikan,
     type: 'website',
     accent: '#F472B6',
@@ -140,7 +140,7 @@ const PROJECTS: Project[] = [
     title: 'Triloka',
     description:
       'Aplikasi mobile deteksi mood untuk auto play musik sesuai dengan kondisi mood',
-    tech: ['Flutter', 'Dart', 'Firebase'],
+    tech: ['Flutter', 'Dart', 'Firebase','Deep Learning'],
     imageSrc: trilokasMobile,
     type: 'mobile',
     accent: '#FFD166',
@@ -164,7 +164,7 @@ const PROJECTS: Project[] = [
     title: 'Klinik Gigi',
     description:
       'Aplikasi mobile manajemen pelayanan klinik gigi dengan sistem reservasi pasien, rekam medis, dan reminder appointment.',
-    tech: ['Flutter', 'Dart', 'Firebase'],
+    tech: ['Flutter', 'Firebase'],
     imageSrc: klinikGigi,
     type: 'mobile',
     accent: '#34D399',
@@ -176,7 +176,7 @@ const PROJECTS: Project[] = [
     title: 'Deteksi Angka',
     description:
       'Website deteksi angka menggunakan KNN',
-    tech: ['React', 'Tailwind CSS'],
+    tech: ['Flask', 'Tailwind CSS'],
     imageSrc: picture1,
     type: 'website',
     accent: '#FF6B6B',
