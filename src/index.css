@@ -221,3 +221,23 @@ html, body {
     font-size: 12px;
   }
 }
+
+/* Modal overlay - prevent any scrolling */
+.modal-overlay-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  overflow: hidden !important;
+  z-index: 9999;
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden !important;
+}
+
+body.modal-open #root {
+  overflow: hidden !important;
+}

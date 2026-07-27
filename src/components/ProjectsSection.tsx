@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import SectionTitle from './SectionTitle';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
@@ -167,37 +168,84 @@ interface ImageModalProps {
 }
 
 const ImageModal: React.FC<ImageModalProps> = ({ isOpen, imageSrc, title, onClose }) => {
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      const scrollX = window.scrollX;
+      
+      // Prevent scrolling on body
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = `-${scrollX}px`;
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+      document.body.style.width = '100%';
+      
+      // Cleanup: restore scroll when modal closes
+      return () => {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        document.body.style.width = '';
+        
+        // Restore scroll position
+        window.scrollTo(scrollX, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  return (
+  // Render modal using portal to body element
+  return createPortal(
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fadeIn"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-fadeIn"
       onClick={onClose}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+      }}
     >
-      {/* Close button */}
+      {/* Close button - fixed to viewport */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 group"
+        className="fixed top-4 right-4 sm:top-6 sm:right-6 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-colors duration-200 cursor-pointer z-[10001]"
         aria-label="Close modal"
       >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      {/* Modal content */}
+      {/* Modal content - centered in viewport */}
       <div
-        className="relative max-w-[95vw] max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl animate-scaleIn"
+        className="flex items-center justify-center w-full h-full p-4 sm:p-6 md:p-8 animate-scaleIn"
         onClick={(e) => e.stopPropagation()}
       >
         <img
           src={imageSrc}
           alt={title}
-          className="w-full h-full object-contain"
-          style={{ maxHeight: '90vh' }}
+          className="object-contain rounded-lg sm:rounded-xl shadow-2xl"
+          style={{ 
+            maxWidth: 'calc(100vw - 2rem)',
+            maxHeight: 'calc(100vh - 2rem)',
+            width: 'auto',
+            height: 'auto',
+          }}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

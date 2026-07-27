@@ -24,9 +24,6 @@ const Home: React.FC = () => {
         <section id="education" className="w-full flex justify-center">
           <EducationSection />
         </section>
-        <section id="services" className="w-full flex justify-center">
-          <ServicesSection />
-        </section>
         <section id="github-contributions" className="w-full flex justify-center">
           <CaseStudiesSection />
         </section>
