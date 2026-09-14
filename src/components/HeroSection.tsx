@@ -74,8 +74,8 @@ const HeroSection = () => {
       />
 
       {/* top section */}
-      <div className="absolute top-10 left-14 right-14 z-20 flex justify-between items-start">
-        <h2 className="text-white text-xl font-semibold font-light tracking-wide">
+      <div className="absolute top-10 left-4 right-4 sm:left-8 sm:right-8 md:left-14 md:right-14 z-20 flex justify-between items-start gap-4">
+        <h2 className="text-white text-lg sm:text-xl font-semibold font-light tracking-wide flex-shrink-0">
           {t.hero.name}
         </h2>
         
@@ -132,15 +132,13 @@ const HeroSection = () => {
 
       {/* title */}
       <div
-        className="absolute bottom-20 left-0 right-0 z-20 overflow-hidden"
-        style={{ lineHeight: 1 }}
+        className="absolute bottom-20 left-0 right-0 z-20 px-4 sm:px-8 md:px-14 flex justify-center"
       >
         <h1
           className="text-white font-bold tracking-tight select-none whitespace-nowrap"
           style={{
-            fontSize: 'clamp(60px, 12vw, 165px)',
+            fontSize: 'clamp(48px, 10vw, 165px)',
             lineHeight: 1,
-            paddingLeft: '0.15em',
           }}
         >
           {t.hero.title}

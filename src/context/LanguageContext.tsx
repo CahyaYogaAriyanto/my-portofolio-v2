@@ -288,17 +288,17 @@ export const translations = {
 
     experience: {
       sectionTitle: 'Pengalaman Kerja',
-      sectionDesc: 'Perjalanan profesional dan pencapaian karier saya dalam pengembangan web',
+      sectionDesc: 'Perjalanan profesional dan pencapaian karier saya sebagai frontend developer',
       responsibilitiesLabel: 'Tanggung Jawab:',
       collapseLabel: 'Tutup',
       expandLabel: 'Buka',
       items: [
         {
-          number: '10 bulan',
+          number: '11 bulan',
           title: 'Front-End Developer (React.js & Vue.js)',
           company: 'PT Gama Integra Informatika',
           location: 'Sleman, Yogyakarta',
-          period: 'Oktober 2025 – Juni 2026',
+          period: 'Oktober 2025 – Agustus 2026',
           responsibilities: [
             'Mengembangkan dan mengimplementasikan desain UI/UX modern menjadi aplikasi web yang responsif, interaktif, dan user-friendly menggunakan React.js, Vue.js, dan TypeScript.',
             'Melakukan integrasi REST API dengan backend untuk pengelolaan data, autentikasi, serta implementasi berbagai fitur bisnis.',
@@ -312,7 +312,7 @@ export const translations = {
           title: 'Front-End Developer Intern (Vue.js)',
           company: 'G Media',
           location: 'Sleman, Yogyakarta',
-          period: 'Januari 2025 – Juni 2025',
+          period: 'Oktober 2025 – Juni 2025',
           responsibilities: [
             'Mengimplementasikan desain UI/UX dari mockup menjadi antarmuka aplikasi web menggunakan Vue.js.',
             'Mengembangkan dan memelihara komponen antarmuka yang responsif, interaktif, dan mudah digunakan.',
@@ -322,7 +322,7 @@ export const translations = {
           ],
         },
         {
-          number: '1 tahun',
+          number: '2 Semester (1 tahun)',
           title: 'Asisten Dosen',
           company: 'Universitas Teknologi Yogyakarta',
           location: 'Sleman, Yogyakarta',
