@@ -13,7 +13,6 @@ const EducationSection: React.FC = () => {
         title={t.cv.sections.education}
         description={t.cv.educationDesc}
       />
-      
       <div className="flex flex-col self-stretch max-w-[1234px] mb-[80px] lg:mb-[140px] mx-4 lg:mx-auto gap-[30px]">
         {t.cv.education.map((edu, index) => (
           <div
@@ -26,10 +25,6 @@ const EducationSection: React.FC = () => {
               {/* Left: Degree & Institution */}
               <div className="flex flex-col gap-2 flex-1">
                 <div className="flex items-center gap-3">
-                  {/* Number badge */}
-                  <div className="flex items-center justify-center w-12 h-12 bg-[#B9FF66] rounded-full border-2 border-[#191A23] shrink-0">
-                    <span className="text-black text-xl font-bold">{String(index + 1).padStart(2, '0')}</span>
-                  </div>
                   <div className="flex flex-col">
                     <h3 className="text-black text-2xl lg:text-3xl font-semibold">{edu.degree}</h3>
                     <p className="text-black/70 text-base lg:text-lg">{edu.institution}</p>

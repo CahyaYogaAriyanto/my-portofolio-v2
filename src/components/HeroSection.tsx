@@ -55,11 +55,11 @@ const HeroSection = () => {
       style={{ height: '100svh', minHeight: '600px', marginLeft: 0, marginRight: 0 }}
     >
       {/* photo bg */}
-      <div className="absolute inset-0 flex justify-center">
+      <div className="absolute inset-0">
         <img
           src={myPhoto}
           alt={t.hero.name}
-          className="h-full w-full object-cover object-top"
+          className="h-full w-full object-cover object-center sm:object-top"
           style={{ filter: 'grayscale(100%)' }}
         />
       </div>
@@ -74,31 +74,31 @@ const HeroSection = () => {
       />
 
       {/* top section */}
-      <div className="absolute top-10 left-4 right-4 sm:left-8 sm:right-8 md:left-14 md:right-14 z-20 flex justify-between items-start gap-4">
-        <h2 className="text-white text-lg sm:text-xl font-semibold font-light tracking-wide flex-shrink-0">
+      <div className="absolute top-6 sm:top-8 md:top-10 left-4 right-4 sm:left-6 sm:right-6 md:left-8 md:right-8 lg:left-14 lg:right-14 z-20 flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4">
+        <h2 className="text-white text-base sm:text-lg md:text-xl font-semibold font-light tracking-wide flex-shrink-0">
           {t.hero.name}
         </h2>
         
-        <p className="hidden md:block text-white/80 text-right max-w-md leading-relaxed">
+        <p className="hidden lg:block text-white/80 text-right text-sm md:text-base max-w-md leading-relaxed">
           {t.hero.bio}
         </p>
       </div>
 
       {/* mobile marquee */}
-      <div className="md:hidden absolute bottom-32 left-0 right-0 z-20 overflow-hidden">
+      <div className="lg:hidden absolute bottom-32 sm:bottom-32 md:bottom-36 left-0 right-0 z-20 overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap">
-          <span className="text-white/80 text-sm mx-4">{t.hero.bio}</span>
-          <span className="text-white/80 text-sm mx-4">{t.hero.bio}</span>
+          <span className="text-white/80 text-xs sm:text-sm mx-4">{t.hero.bio}</span>
+          <span className="text-white/80 text-xs sm:text-sm mx-4">{t.hero.bio}</span>
         </div>
       </div>
 
       {/* arrow btn */}
-      <div className="absolute left-[68%] top-1/2 -translate-y-1/2 z-20">
+      <div className="absolute left-1/2 sm:left-[60%] md:left-[65%] lg:left-[68%] top-1/2 -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 z-20">
         <button
           onClick={handleExplosion}
           aria-label={t.hero.viewWork}
           className="
-            w-16 h-16 rounded-full
+            w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full
             border border-white/50
             flex items-center justify-center
             text-white
@@ -108,7 +108,7 @@ const HeroSection = () => {
             active:scale-90
           "
         >
-          <ArrowUpRight size={28} />
+          <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
         </button>
       </div>
 
@@ -132,13 +132,13 @@ const HeroSection = () => {
 
       {/* title */}
       <div
-        className="absolute bottom-20 left-0 right-0 z-20 px-4 sm:px-8 md:px-14 flex justify-center"
+        className="absolute bottom-[85px] sm:bottom-20 left-0 right-0 z-20 px-4 sm:px-6 md:px-8 lg:px-14 flex justify-center"
       >
         <h1
-          className="text-white font-bold tracking-tight select-none whitespace-nowrap"
+          className="text-white font-bold tracking-tight select-none text-center"
           style={{
-            fontSize: 'clamp(48px, 10vw, 165px)',
-            lineHeight: 1,
+            fontSize: 'clamp(32px, 8vw, 165px)',
+            lineHeight: 1.1,
           }}
         >
           {t.hero.title}

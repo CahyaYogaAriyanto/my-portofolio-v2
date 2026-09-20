@@ -216,6 +216,21 @@ export const translations = {
           period: '2022 – 2026',
           gpa: 'GPA: 3.78 / 4.00',
         },
+        {
+          degree: 'Vocational High School',
+          institution: 'SMK Ma’arif NU Doro',
+          period: '2019 – 2022',
+        },
+        {
+          degree: 'Junior High School',
+          institution: 'SMP Negeri 1 Petungkriyono',
+          period: '2016 – 2019',
+        },
+        {
+          degree: 'Elementary School',
+          institution: 'SD Negeri 01 Yosorejo',
+          period: '2010 – 2016',
+        },
       ],
 
       certifications: [
@@ -448,6 +463,21 @@ export const translations = {
           institution: 'Universitas Teknologi Yogyakarta ',
           period: '2022 – 2026',
           gpa: 'IPK: 3.78 / 4.00',
+        },
+        {
+          degree: 'Sekolah Menengah Kejuruan',
+          institution: 'SMK Ma’arif NU Doro',
+          period: '2019 – 2022',
+        },
+        {
+          degree: 'Sekolah Menengah Pertama',
+          institution: 'SMP Negeri 1 Petungkriyono',
+          period: '2016 – 2019',
+        },
+        {
+          degree: 'Sekolah Dasar',
+          institution: 'SD Negeri 01 Yosorejo',
+          period: '2010 – 2016',
         },
       ],
 

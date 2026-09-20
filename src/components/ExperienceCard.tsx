@@ -36,7 +36,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   
   return (
     <div
-      className={`experience-card flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-300 ease-in-out overflow-hidden cursor-pointer will-change-[background-color,transform]`}
+      className={`experience-card flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-600 ease-in-out overflow-hidden cursor-pointer will-change-[background-color,transform]`}
       style={{ boxShadow: '0px 5px 0px #191A23' }}
       onClick={onToggle}
     >
@@ -115,7 +115,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
       {/* Dropdown Content - Shows when expanded */}
       <div
-        className={`experience-card-content transition-all duration-400 ease-in-out will-change-[max-height,opacity] ${
+        className={`experience-card-content transition-all duration-700 ease-in-out will-change-[max-height,opacity] ${
           isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >

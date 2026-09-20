@@ -68,7 +68,7 @@ const PROJECTS: Project[] = [
     title: 'Pig Friends',
     description:
       'Website sistem pakar untuk diagnosa penyakit babi. Menampilkan panduan, galeri, dan forum diskusi interaktif dengan pakar.',
-    tech: ['React', 'Tailwind CSS', 'Vite'],
+    tech: ['React', 'Tailwind CSS', 'Flask','Fuzzy Mamdani'],
     imageSrc: pigFriends,
     type: 'website',
     accent: '#B9FF66',
@@ -80,7 +80,7 @@ const PROJECTS: Project[] = [
     title: 'Plagbleg',
     description:
       'Platform deteksi & pelaporan plagiarisme teks dengan antarmuka bersih dan intuitif.',
-    tech: ['React', 'Node.js', 'Express'],
+    tech: ['React', 'flask', 'Express'],
     imageSrc: plagbleg,
     type: 'website',
     accent: '#C8B4FA',
@@ -116,7 +116,7 @@ const PROJECTS: Project[] = [
     title: 'Klinik Hewan Dashboard',
     description:
       'Sistem manajemen pelayanan klinik hewan berbasis web dengan fitur administrasi lengkap, rekam medis, dan jadwal appointment.',
-    tech: ['React', 'Node.js', 'MySQL'],
+    tech: ['Vue Js', 'Node.js', 'MySQL'],
     imageSrc: klinikHewan,
     type: 'website',
     accent: '#60A5FA',
@@ -128,7 +128,7 @@ const PROJECTS: Project[] = [
     title: 'Klinik Kecantikan Dashboard',
     description:
       'Platform manajemen pelayanan klinik kecantikan dengan sistem booking, manajemen pelanggan, dan laporan treatment.',
-    tech: ['Next Js', 'Tailwind CSS', 'PostgreSQL'],
+    tech: ['React Js', 'Tailwind CSS', 'PostgreSQL'],
     imageSrc: klinikKecantikan,
     type: 'website',
     accent: '#F472B6',
@@ -164,7 +164,7 @@ const PROJECTS: Project[] = [
     title: 'Klinik Gigi',
     description:
       'Aplikasi mobile manajemen pelayanan klinik gigi dengan sistem reservasi pasien, rekam medis, dan reminder appointment.',
-    tech: ['Flutter', 'Firebase'],
+    tech: ['Flutter', 'Firebase','Flask'],
     imageSrc: klinikGigi,
     type: 'mobile',
     accent: '#34D399',
@@ -176,7 +176,7 @@ const PROJECTS: Project[] = [
     title: 'Deteksi Angka',
     description:
       'Website deteksi angka menggunakan KNN',
-    tech: ['Flask', 'Tailwind CSS'],
+    tech: ['Flask', 'Tailwind CSS','KNN'],
     imageSrc: picture1,
     type: 'website',
     accent: '#FF6B6B',
@@ -188,7 +188,7 @@ const PROJECTS: Project[] = [
     title: 'Sayur Mart',
     description:
       'Platform e-commerce sayur segar dengan sistem pemesanan online yang mudah digunakan.',
-    tech: ['React', 'Node.js', 'MongoDB'],
+    tech: ['React Js', 'Supabase'],
     imageSrc: sayurMart,
     type: 'website',
     accent: '#6EE7B7',
@@ -212,7 +212,7 @@ const PROJECTS: Project[] = [
     title: 'BeeCook',
     description:
       'Website belajar resep makanan yang minimalis',
-    tech: ['React', 'Tailwind CSS'],
+    tech: ['React Js', 'Tailwind CSS'],
     imageSrc: beeCook,
     type: 'website',
     accent: '#B9FF66',
@@ -234,12 +234,6 @@ const PROJECTS: Project[] = [
   },
 ];
 
-// ── helper: GitHub SVG ico ───────────────────────────────────────────────────
-const GithubIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
-  </svg>
-);
 
 const ExternalIcon = ({ className = 'w-4 h-4' }: { className?: string }) => (
   <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
@@ -549,19 +543,16 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
       {/* accent stripe */}
       <div className="absolute top-0 left-0 right-0 h-1.5 z-10" style={{ background: project.accent }} />
 
-      {/* browser chrome + screenshot - with max-height to prevent overflow */}
+      {/* browser chrome + screenshot */}
       <div className="relative cursor-pointer overflow-hidden" 
-        style={{ 
-          aspectRatio,
-          maxHeight: '380px', // Limit image height to show description
-        }} 
+        style={{ minHeight: '380px', height: '65%' }}
         onClick={handleImageClick}>
-        {/* screenshot — fills the aspect-ratio box */}
+        {/* screenshot — fills the container */}
         <div className="absolute inset-0 overflow-hidden bg-[#F9F9F9]">
           <OptimizedImage
             src={project.imageSrc}
             alt={project.title}
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
@@ -577,8 +568,6 @@ const BentoCard: React.FC<BentoCardProps> = ({ project, variant, onImageClick })
           )}
         </div>
       </div>
-
-      {/* info - flex-1 to fill remaining space */}
       <div className="p-4 sm:p-5 flex flex-col gap-2 sm:gap-2.5 flex-1">
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-[#09090B] text-sm sm:text-base font-bold leading-snug line-clamp-2">{project.title}</h3>

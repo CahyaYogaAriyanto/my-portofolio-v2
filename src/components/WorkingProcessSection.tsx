@@ -10,13 +10,22 @@ const WorkingProcessSection: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLang();
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const lastScrollY = useRef<number>(0);
+  const isManualToggle = useRef<boolean>(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const handleToggle = (index: number) => {
+    // Manual toggle: close if same card clicked, otherwise open the clicked card
+    isManualToggle.current = true;
     setExpandedIndex(expandedIndex === index ? null : index);
+    
+    // Reset manual toggle after 3 seconds
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      isManualToggle.current = false;
+    }, 3000);
   };
 
-  // auto expand on scroll
+  // Auto expand on scroll - ensures only 1 card is active at a time
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
 
@@ -26,18 +35,28 @@ const WorkingProcessSection: React.FC = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            const currentScrollY = window.scrollY;
-            lastScrollY.current = currentScrollY;
+            // Only auto-expand if user hasn't manually toggled
+            if (isManualToggle.current) return;
 
             if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-              setVisibleItems((prev) => new Set(prev).add(index));
+              // Mark this item as visible
+              setVisibleItems((prev) => {
+                const newSet = new Set(prev);
+                newSet.add(index);
+                return newSet;
+              });
+              
+              // Set this card as the ONLY expanded card
               setExpandedIndex(index);
             } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+              // Remove from visible items
               setVisibleItems((prev) => {
                 const newSet = new Set(prev);
                 newSet.delete(index);
                 return newSet;
               });
+              
+              // Only collapse if this card is currently expanded
               setExpandedIndex((current) => (current === index ? null : current));
             }
           });
@@ -53,6 +72,7 @@ const WorkingProcessSection: React.FC = () => {
     });
 
     return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
       observers.forEach((observer) => observer.disconnect());
     };
   }, [t.experience.items.length]);
@@ -70,7 +90,7 @@ const WorkingProcessSection: React.FC = () => {
             <div
               key={index}
               ref={(el) => {itemRefs.current[index] = el}}
-              className="sticky mb-[20px] lg:mb-[30px] transition-all duration-500 ease-out"
+              className="sticky mb-[20px] lg:mb-[30px] transition-all duration-600 ease-out"
               style={{
                 top: `${80 + index * 30}px`,
                 zIndex: index + 1,

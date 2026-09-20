@@ -22,7 +22,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
   
   return (
     <div
-      className={`flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-500 ease-out overflow-hidden`}
+      className={`flex flex-col self-stretch ${activeBgColor} rounded-[45px] border border-solid border-[#191A23] transition-all duration-600 ease-out overflow-hidden`}
       style={{ boxShadow: '0px 5px 0px #191A23' }}
     >
       {/* Header - Always Visible */}
@@ -76,7 +76,7 @@ const ProcessStep: React.FC<ProcessStepProps> = ({
 
       {/* Dropdown Content - Shows when expanded */}
       <div
-        className={`transition-all duration-500 ease-in-out ${
+        className={`transition-all duration-700 ease-in-out ${
           isExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >

@@ -15,20 +15,19 @@ const ExperienceSection: React.FC = () => {
   const timeoutRef = useRef<NodeJS.Timeout>();
 
   const handleToggle = (index: number) => {
+    // Manual toggle: close if same card clicked, otherwise open the clicked card
     isManualToggle.current = true;
     setExpandedIndex(expandedIndex === index ? null : index);
     
-    // Reset manual toggle after 2 seconds
+    // Reset manual toggle after 3 seconds
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       isManualToggle.current = false;
-    }, 2000);
+    }, 3000);
   };
 
-  // Auto expand on scroll - with debounce
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
-    let rafId: number | null = null;
 
     itemRefs.current.forEach((item, index) => {
       if (!item) return;
@@ -36,36 +35,35 @@ const ExperienceSection: React.FC = () => {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            // Cancel previous animation frame
-            if (rafId) cancelAnimationFrame(rafId);
+            // Only auto-expand if user hasn't manually toggled
+            if (isManualToggle.current) return;
 
-            // Use requestAnimationFrame for smoother updates
-            rafId = requestAnimationFrame(() => {
-              // Only auto-expand if user hasn't manually toggled
-              if (isManualToggle.current) return;
-
-              if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-                setVisibleItems((prev) => {
-                  const newSet = new Set(prev);
-                  newSet.add(index);
-                  return newSet;
-                });
-                setExpandedIndex(index);
-              } else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) {
-                setVisibleItems((prev) => {
-                  const newSet = new Set(prev);
-                  newSet.delete(index);
-                  return newSet;
-                });
-                // Only collapse if this card is currently expanded
-                setExpandedIndex((current) => (current === index ? null : current));
-              }
-            });
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+              // Mark this item as visible
+              setVisibleItems((prev) => {
+                const newSet = new Set(prev);
+                newSet.add(index);
+                return newSet;
+              });
+              
+              // Set this card as the ONLY expanded card
+              setExpandedIndex(index);
+            } else if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+              // Remove from visible items
+              setVisibleItems((prev) => {
+                const newSet = new Set(prev);
+                newSet.delete(index);
+                return newSet;
+              });
+              
+              // Only collapse if this card is currently expanded
+              setExpandedIndex((current) => (current === index ? null : current));
+            }
           });
         },
         {
-          threshold: [0, 0.2, 0.4, 0.6, 0.8, 1.0],
-          rootMargin: '-15% 0px -35% 0px',
+          threshold: [0, 0.3, 0.5, 0.7, 1.0],
+          rootMargin: '-20% 0px -30% 0px',
         }
       );
 
@@ -74,7 +72,6 @@ const ExperienceSection: React.FC = () => {
     });
 
     return () => {
-      if (rafId) cancelAnimationFrame(rafId);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       observers.forEach((observer) => observer.disconnect());
     };
@@ -93,7 +90,7 @@ const ExperienceSection: React.FC = () => {
             <div
               key={index}
               ref={(el) => {itemRefs.current[index] = el}}
-              className="experience-card-wrapper sticky mb-[20px] lg:mb-[30px] transition-all duration-300 ease-out will-change-transform"
+              className="experience-card-wrapper sticky mb-[20px] lg:mb-[30px] transition-all duration-500 ease-out will-change-transform"
               style={{
                 top: `${80 + index * 30}px`,
                 zIndex: index + 1,
